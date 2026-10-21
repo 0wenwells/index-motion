@@ -19,6 +19,7 @@
   --s-small: 11px;   /* source 2 — 8pt */
   --s-body: 11px;    /* everything at description size */
   --s-head: 11px;
+  --s-tiny: 9px;     /* matches the year labels on the timeline */
   --indent: 12px;
   --rule: 0.5px solid var(--hair);
 }
@@ -76,13 +77,13 @@ svg { display: block; width: 100%; height: auto; }
 
 .works { list-style: none; margin: 0; padding: 4px 0 0; }
 .work:last-child { padding-bottom: 0; }
-.work { padding: 10px var(--indent); font-size: var(--s-small); line-height: 1.35; cursor: pointer; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 0 6px; }
+.work { padding: 10px var(--indent); font-size: var(--s-small); line-height: 1.35; cursor: pointer; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 0 6px; }
 .work:hover .t { text-decoration: underline; text-underline-offset: 2px; }
-.work .y { font-variant-numeric: tabular-nums; color: var(--ink-2); }
-.work .m { color: var(--ink-2); }
-.work p { margin: 4px 0 0; color: var(--ink-2); }
+.work .y { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: var(--s-tiny); line-height: 15px; }
+.work .m { color: var(--ink-2); font-size: var(--s-tiny); }
+.work p { margin: 4px 0 0; color: var(--ink-2); font-size: var(--s-tiny); }
 .work .links { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
-.work .links a, .work .links button { font-size: var(--s-small); color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.work .links a, .work .links button { font-size: var(--s-tiny); color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
 .work.sel { background: var(--ink); color: var(--paper); }
 .work.sel .y, .work.sel .m, .work.sel p, .work.sel .links a, .work.sel .links button { color: var(--paper); }
 
