@@ -16,9 +16,9 @@
   --gap: #4d4d4d;
   color-scheme: dark;
   --f: "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --s-small: 11px;   /* source 2 — 8pt */
-  --s-body: 11px;    /* everything at description size */
-  --s-head: 11px;
+  --s-small: 9px;
+  --s-body: 9px;    /* one size throughout, matching the timeline labels */
+  --s-head: 9px;
   --s-tiny: 9px;     /* matches the year labels on the timeline */
   --indent: 12px;
   --rule: 0.5px solid var(--hair);
@@ -79,13 +79,12 @@ svg { display: block; width: 100%; height: auto; }
 .work:last-child { padding-bottom: 0; }
 .work { padding: 10px var(--indent); font-size: var(--s-small); line-height: 1.35; cursor: pointer; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 0 6px; }
 .work:hover .t { text-decoration: underline; text-underline-offset: 2px; }
-.work .y { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: var(--s-tiny); line-height: 15px; }
+.work .y { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: var(--s-tiny); }
 .work .m { color: var(--ink-2); font-size: var(--s-tiny); }
 .work p { margin: 4px 0 0; color: var(--ink-2); font-size: var(--s-tiny); }
 .work .links { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
 .work .links a, .work .links button { font-size: var(--s-tiny); color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
-.work.sel { background: var(--ink); color: var(--paper); }
-.work.sel .y, .work.sel .m, .work.sel p, .work.sel .links a, .work.sel .links button { color: var(--paper); }
+.work.sel .t { text-decoration: underline; text-underline-offset: 2px; }
 
 /* Rollover player: opens on hover, stays put until closed */
 #peek { position: absolute; z-index: 20; width: 420px; max-width: calc(100vw - 32px); background: var(--paper); border: var(--rule); }
@@ -333,7 +332,7 @@ textarea { resize: vertical; min-height: 44px; }
         }
         body.appendChild(links);
         li.appendChild(body);
-        li.addEventListener("click", function () { select(w.id); });
+        li.addEventListener("click", function () { var src = embedUrl(w.url); if (src) { clearTimeout(peekTimer); openPeek(t, src); } });
         ol.appendChild(li);
       });
       col.appendChild(ol);
@@ -346,7 +345,10 @@ textarea { resize: vertical; min-height: 44px; }
     state.sel = state.sel === id ? null : id;
     renderStrip();
     var n = state.sel && $("w-" + id);
-    if (n) n.scrollIntoView({ block: "nearest", inline: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    if (!n) { hidePeek(); return; }
+    n.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "auto" });
+    var w = works.filter(function (x) { return x.id === id; })[0], src = w && embedUrl(w.url);
+    if (src) openPeek(n.querySelector(".t"), src);
   }
 
   // ---------- Form ----------
