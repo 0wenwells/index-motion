@@ -86,10 +86,19 @@ svg { display: block; width: 100%; height: auto; }
 .work.sel { background: var(--ink); color: var(--paper); }
 .work.sel .y, .work.sel .m, .work.sel p, .work.sel .links a, .work.sel .links button { color: var(--paper); }
 
-/* Rollover player */
-#peek { position: fixed; z-index: 20; width: 360px; max-width: calc(100vw - 32px); aspect-ratio: 16 / 9; background: #000; pointer-events: none; box-shadow: 0 0 0 0.5px var(--hair); }
+/* Rollover player: opens on hover, stays put until closed */
+#peek { position: absolute; z-index: 20; width: 420px; max-width: calc(100vw - 32px); background: var(--paper); border: var(--rule); }
+#peek .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 0 0 10px; border-bottom: var(--rule); font-size: var(--s-small); }
+#peek .bar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#peek .x { flex: 0 0 auto; width: 26px; height: 26px; position: relative; border-left: var(--rule); }
+#peek .x::before, #peek .x::after { content: ""; position: absolute; left: 7px; right: 7px; top: 50%; border-top: 1px solid var(--ink); }
+#peek .x::before { transform: rotate(45deg); }
+#peek .x::after { transform: rotate(-45deg); }
+#peek .x:hover { background: var(--ink); }
+#peek .x:hover::before, #peek .x:hover::after { border-color: var(--paper); }
+#peek .frame { aspect-ratio: 16 / 9; background: #000; }
 #peek iframe { width: 100%; height: 100%; border: 0; display: block; }
-.work .t.playable { cursor: zoom-in; }
+.work .t.playable { cursor: pointer; }
 .work .t.playable::after { content: " \25B8"; color: var(--ink-2); }
 
 /* Form */
@@ -213,34 +222,43 @@ textarea { resize: vertical; min-height: 44px; }
     var m = url.match(/vimeo\.com\/(?:.*\/)?(\d{5,})/);
     if (m) return "https://player.vimeo.com/video/" + m[1] + "?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&dnt=1";
     m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
-    if (m) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&mute=1&loop=1&playlist=" + m[1] + "&controls=0";
+    if (m) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&mute=1&loop=1&playlist=" + m[1] + "&controls=1&playsinline=1";
     return null;
   }
-  var peek = null, peekTimer = null, canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
-  function placePeek(e) {
-    if (!peek) return;
-    var w = peek.offsetWidth, hgt = peek.offsetHeight, x = e.clientX + 18, y = e.clientY + 18;
-    if (x + w > innerWidth - 16) x = e.clientX - w - 18;
-    if (y + hgt > innerHeight - 16) y = e.clientY - hgt - 18;
-    peek.style.left = Math.max(16, x) + "px"; peek.style.top = Math.max(16, y) + "px";
+  var peek = null, peekTimer = null, peekSrc = null, canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  function hidePeek() { clearTimeout(peekTimer); if (peek) { peek.remove(); peek = null; peekSrc = null; } }
+  function openPeek(node, src) {
+    if (peek && peekSrc === src) return;
+    hidePeek();
+    peek = document.createElement("div"); peek.id = "peek"; peekSrc = src;
+    var bar = document.createElement("div"); bar.className = "bar";
+    var label = document.createElement("span"); label.textContent = node.textContent;
+    var x = document.createElement("button"); x.type = "button"; x.className = "x"; x.setAttribute("aria-label", "Close video");
+    x.addEventListener("click", hidePeek);
+    bar.appendChild(label); bar.appendChild(x);
+    var frame = document.createElement("div"); frame.className = "frame";
+    var f = document.createElement("iframe");
+    f.src = src; f.title = node.textContent;
+    f.allow = "autoplay; fullscreen; picture-in-picture; encrypted-media"; f.allowFullscreen = true;
+    frame.appendChild(f); peek.appendChild(bar); peek.appendChild(frame);
+    document.body.appendChild(peek);
+    // pin beside the title, kept inside the window
+    var r = node.getBoundingClientRect(), w = peek.offsetWidth, hgt = peek.offsetHeight;
+    var x0 = r.left, y0 = r.bottom + 8;
+    if (x0 + w > innerWidth - 16) x0 = innerWidth - 16 - w;
+    if (y0 + hgt > innerHeight - 16) y0 = Math.max(16, r.top - hgt - 8);
+    peek.style.left = (Math.max(16, x0) + scrollX) + "px"; peek.style.top = (y0 + scrollY) + "px";
   }
-  function hidePeek() { clearTimeout(peekTimer); if (peek) { peek.remove(); peek = null; } }
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") hidePeek(); });
   function attachPeek(node, url) {
     var src = embedUrl(url);
-    if (!src || !canHover) return;
+    if (!src) return;
     node.classList.add("playable");
-    node.addEventListener("mouseenter", function (e) {
-      clearTimeout(peekTimer);
-      peekTimer = setTimeout(function () {
-        hidePeek();
-        peek = document.createElement("div"); peek.id = "peek";
-        var f = document.createElement("iframe");
-        f.src = src; f.allow = "autoplay; fullscreen; picture-in-picture"; f.title = node.textContent;
-        peek.appendChild(f); document.body.appendChild(peek); placePeek(e);
-      }, 250);
-    });
-    node.addEventListener("mousemove", placePeek);
-    node.addEventListener("mouseleave", hidePeek);
+    if (canHover) {
+      node.addEventListener("mouseenter", function () { clearTimeout(peekTimer); peekTimer = setTimeout(function () { openPeek(node, src); }, 300); });
+      node.addEventListener("mouseleave", function () { clearTimeout(peekTimer); });
+    }
+    node.addEventListener("click", function () { clearTimeout(peekTimer); openPeek(node, src); });
   }
 
   // ---------- Strip ----------
