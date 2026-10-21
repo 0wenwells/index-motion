@@ -1,0 +1,305 @@
+[
+  {
+    "id": "s01",
+    "title": "Lichtspiel Opus 1",
+    "maker": "Walter Ruttmann",
+    "year": 1921,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Among the first abstract animated films shown publicly. Shape and colour moving to music."
+  },
+  {
+    "id": "s02",
+    "title": "Rhythmus 21",
+    "maker": "Hans Richter",
+    "year": 1921,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Squares and rectangles on a black ground. Motion as pure rhythm, no subject."
+  },
+  {
+    "id": "s03",
+    "title": "Symphonie Diagonale",
+    "maker": "Viking Eggeling",
+    "year": 1924,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Line drawings that grow and shrink along a diagonal axis."
+  },
+  {
+    "id": "s04",
+    "title": "Rhythm in Light",
+    "maker": "Mary Ellen Bute",
+    "year": 1934,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Light, reflection and objects filmed to music. Early American abstract animation."
+  },
+  {
+    "id": "s05",
+    "title": "A Colour Box",
+    "maker": "Len Lye",
+    "year": 1935,
+    "url": "",
+    "tags": [
+      "direct animation",
+      "starter set"
+    ],
+    "note": "Painted straight onto film stock. Also an advert for the GPO."
+  },
+  {
+    "id": "s06",
+    "title": "An Optical Poem",
+    "maker": "Oskar Fischinger",
+    "year": 1938,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Paper shapes on wires, timed to Liszt. Made at MGM."
+  },
+  {
+    "id": "s07",
+    "title": "Begone Dull Care",
+    "maker": "Norman McLaren & Evelyn Lambart",
+    "year": 1949,
+    "url": "",
+    "tags": [
+      "direct animation",
+      "starter set"
+    ],
+    "note": "Painted and scratched film cut to Oscar Peterson. Image follows sound."
+  },
+  {
+    "id": "s08",
+    "title": "The Man with the Golden Arm (titles)",
+    "maker": "Saul Bass",
+    "year": 1955,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "White bars on black. Often cited as the start of the modern title sequence."
+  },
+  {
+    "id": "s09",
+    "title": "Vertigo (titles)",
+    "maker": "Saul Bass with John Whitney",
+    "year": 1958,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "Spirals drawn with a mechanical analogue computer."
+  },
+  {
+    "id": "s10",
+    "title": "North by Northwest (titles)",
+    "maker": "Saul Bass",
+    "year": 1959,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "kinetic type",
+      "starter set"
+    ],
+    "note": "Type sliding along a grid that becomes a building facade."
+  },
+  {
+    "id": "s11",
+    "title": "Anatomy of a Murder (titles)",
+    "maker": "Saul Bass",
+    "year": 1959,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "Cut-paper body parts animated to Ellington."
+  },
+  {
+    "id": "s12",
+    "title": "Catalog",
+    "maker": "John Whitney",
+    "year": 1961,
+    "url": "",
+    "tags": [
+      "computational",
+      "starter set"
+    ],
+    "note": "A showreel of effects from his analogue computer. Motion as a system."
+  },
+  {
+    "id": "s13",
+    "title": "Dr. No (titles)",
+    "maker": "Maurice Binder",
+    "year": 1962,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "Coloured dots and silhouettes. The template for every Bond opening."
+  },
+  {
+    "id": "s14",
+    "title": "Dr. Strangelove (titles)",
+    "maker": "Pablo Ferro",
+    "year": 1964,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "kinetic type",
+      "starter set"
+    ],
+    "note": "Hand-drawn type laid over found footage of a B-52 refuelling."
+  },
+  {
+    "id": "s15",
+    "title": "Pixillation",
+    "maker": "Lillian Schwartz",
+    "year": 1970,
+    "url": "",
+    "tags": [
+      "computational",
+      "starter set"
+    ],
+    "note": "Computer-generated pattern made at Bell Labs, mixed with hand animation."
+  },
+  {
+    "id": "s16",
+    "title": "Synchromy",
+    "maker": "Norman McLaren",
+    "year": 1971,
+    "url": "",
+    "tags": [
+      "direct animation",
+      "starter set"
+    ],
+    "note": "The soundtrack shapes are also the image. You see what you hear."
+  },
+  {
+    "id": "s17",
+    "title": "Hunger",
+    "maker": "Peter Foldes",
+    "year": 1974,
+    "url": "",
+    "tags": [
+      "computational",
+      "starter set"
+    ],
+    "note": "Early computer key-frame interpolation. Drawings morph into each other."
+  },
+  {
+    "id": "s18",
+    "title": "Arabesque",
+    "maker": "John Whitney",
+    "year": 1975,
+    "url": "",
+    "tags": [
+      "computational",
+      "starter set"
+    ],
+    "note": "Harmonic motion as a design principle. Points moving at related speeds."
+  },
+  {
+    "id": "s19",
+    "title": "3/78 (Objects and Transformations)",
+    "maker": "Larry Cuba",
+    "year": 1978,
+    "url": "",
+    "tags": [
+      "computational",
+      "starter set"
+    ],
+    "note": "Sixteen points of light transforming. Minimal, strict, rule-based."
+  },
+  {
+    "id": "s20",
+    "title": "MTV launch identity",
+    "maker": "Manhattan Design",
+    "year": 1981,
+    "url": "",
+    "tags": [
+      "broadcast identity",
+      "starter set"
+    ],
+    "note": "A fixed logo shape with endlessly changing surfaces. Identity as variation."
+  },
+  {
+    "id": "s21",
+    "title": "Se7en (titles)",
+    "maker": "Kyle Cooper",
+    "year": 1995,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "kinetic type",
+      "starter set"
+    ],
+    "note": "Scratched, unstable type. Made the title sequence feel like evidence."
+  },
+  {
+    "id": "s22",
+    "title": "Catch Me If You Can (titles)",
+    "maker": "Kuntzel + Deygas",
+    "year": 2002,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "A flat graphic chase that openly borrows from Saul Bass."
+  },
+  {
+    "id": "s23",
+    "title": "AANAATT",
+    "maker": "Max Hattler",
+    "year": 2008,
+    "url": "",
+    "tags": [
+      "abstract film",
+      "starter set"
+    ],
+    "note": "Physical objects shot frame by frame into geometric pattern."
+  },
+  {
+    "id": "s24",
+    "title": "Game of Thrones (titles)",
+    "maker": "Elastic",
+    "year": 2011,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "A clockwork map that builds itself. Information as mechanism."
+  },
+  {
+    "id": "s25",
+    "title": "True Detective (titles)",
+    "maker": "Elastic / Patrick Clair",
+    "year": 2014,
+    "url": "",
+    "tags": [
+      "title sequence",
+      "starter set"
+    ],
+    "note": "Double exposures of people and landscape."
+  }
+]
