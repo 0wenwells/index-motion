@@ -361,5 +361,17 @@
       "starter set"
     ],
     "note": "Diagrammatic. Juxtaposing the humdrum realities of suburban living with the theoretical physics and hard math."
+  },
+  {
+    "id": "s31",
+    "title": "Modular",
+    "maker": "Ash Thorp & Alasdair Willson",
+    "year": 2020,
+    "url": "https://www.youtube.com/watch?v=J8sCIG83y5s",
+    "tags": [
+      "Modular Motion",
+      "starter set"
+    ],
+    "note": "Modular visual and motion system."
   }
 ]
