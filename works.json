@@ -1,377 +1,926 @@
 [
   {
-    "id": "s01",
+    "id": "w001",
+    "year": 1908,
+    "title": "Fantasmagorie",
+    "maker": "Émile Cohl",
+    "type": "Short film",
+    "medium": "Hand-drawn",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Chalk-line figures that turn into one another. Often called the first fully animated film."
+  },
+  {
+    "id": "w002",
+    "year": 1921,
     "title": "Lichtspiel Opus 1",
     "maker": "Walter Ruttmann",
-    "year": 1921,
+    "type": "Experimental & art",
+    "medium": "Hand-drawn",
+    "focus": "Abstraction",
     "url": "https://www.youtube.com/watch?v=aHZdDmYFZN0&list=RDaHZdDmYFZN0&start_radio=1",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Among the first abstract animated films shown publicly. Shape and colour moving to music."
   },
   {
-    "id": "s02",
+    "id": "w003",
+    "year": 1921,
     "title": "Rhythmus 21",
     "maker": "Hans Richter",
-    "year": 1921,
+    "type": "Experimental & art",
+    "medium": "Cut-out & collage",
+    "focus": "Abstraction",
     "url": "https://www.youtube.com/watch?v=239pHUy0FGc",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Squares and rectangles on a black ground. Motion as pure rhythm, no subject."
   },
   {
-    "id": "s03",
+    "id": "w004",
+    "year": 1924,
+    "title": "Ballet Mécanique",
+    "maker": "Fernand Léger & Dudley Murphy",
+    "type": "Experimental & art",
+    "medium": "Optical & live action",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Machine parts, objects and faces cut into repeating loops."
+  },
+  {
+    "id": "w005",
+    "year": 1924,
     "title": "Symphonie Diagonale",
     "maker": "Viking Eggeling",
-    "year": 1924,
+    "type": "Experimental & art",
+    "medium": "Cut-out & collage",
+    "focus": "Abstraction",
     "url": "https://www.youtube.com/watch?v=P0yRI3volkY",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Line drawings that grow and shrink along a diagonal axis."
   },
   {
-    "id": "s04",
+    "id": "w006",
+    "year": 1926,
+    "title": "Anémic Cinéma",
+    "maker": "Marcel Duchamp",
+    "type": "Experimental & art",
+    "medium": "Stop motion & physical",
+    "focus": "Typography",
+    "url": "",
+    "note": "Spinning spiral discs alternate with discs of spiralling puns."
+  },
+  {
+    "id": "w007",
+    "year": 1928,
+    "title": "Ghosts Before Breakfast",
+    "maker": "Hans Richter",
+    "type": "Experimental & art",
+    "medium": "Optical & live action",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Everyday objects rebel. Trick photography used to break ordinary logic."
+  },
+  {
+    "id": "w008",
+    "year": 1933,
+    "title": "Night on Bald Mountain",
+    "maker": "Alexandre Alexeieff & Claire Parker",
+    "type": "Short film",
+    "medium": "Stop motion & physical",
+    "focus": "Light",
+    "url": "",
+    "note": "Made on a pinscreen: thousands of pins pushed in and out to cast shadows."
+  },
+  {
+    "id": "w009",
+    "year": 1934,
     "title": "Rhythm in Light",
     "maker": "Mary Ellen Bute",
-    "year": 1934,
+    "type": "Experimental & art",
+    "medium": "Optical & live action",
+    "focus": "Light",
     "url": "https://www.youtube.com/watch?v=850AmGWl-Ko&list=RD850AmGWl-Ko&start_radio=1",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Light, reflection and objects filmed to music. Early American abstract animation."
   },
   {
-    "id": "s05",
+    "id": "w010",
+    "year": 1935,
     "title": "A Colour Box",
     "maker": "Len Lye",
-    "year": 1935,
+    "type": "Advertising",
+    "medium": "Direct on film",
+    "focus": "Sound & rhythm",
     "url": "https://www.youtube.com/watch?v=fOEqTwwkB3Y",
-    "tags": [
-      "direct animation",
-      "starter set"
-    ],
     "note": "Painted straight onto film stock. Also an advert for the GPO."
   },
   {
-    "id": "s06",
+    "id": "w011",
+    "year": 1935,
+    "title": "Composition in Blue",
+    "maker": "Oskar Fischinger",
+    "type": "Experimental & art",
+    "medium": "Stop motion & physical",
+    "focus": "Abstraction",
+    "url": "",
+    "note": "Solid shapes move through a blue space in time to music."
+  },
+  {
+    "id": "w012",
+    "year": 1937,
+    "title": "Trade Tattoo",
+    "maker": "Len Lye",
+    "type": "Advertising",
+    "medium": "Direct on film",
+    "focus": "Archive & found footage",
+    "url": "",
+    "note": "Offcuts of GPO documentaries, stencilled and painted over in colour."
+  },
+  {
+    "id": "w013",
+    "year": 1938,
     "title": "An Optical Poem",
     "maker": "Oskar Fischinger",
-    "year": 1938,
+    "type": "Short film",
+    "medium": "Stop motion & physical",
+    "focus": "Sound & rhythm",
     "url": "https://www.youtube.com/watch?v=FcHsysPGSt0&t=3s",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Paper shapes on wires, timed to Liszt. Made at MGM."
   },
   {
-    "id": "s07",
+    "id": "w014",
+    "year": 1940,
+    "title": "Dots",
+    "maker": "Norman McLaren",
+    "type": "Experimental & art",
+    "medium": "Direct on film",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Both picture and soundtrack drawn straight onto the film."
+  },
+  {
+    "id": "w015",
+    "year": 1947,
+    "title": "Motion Painting No. 1",
+    "maker": "Oskar Fischinger",
+    "type": "Experimental & art",
+    "medium": "Hand-drawn",
+    "focus": "Abstraction",
+    "url": "",
+    "note": "One painting on glass, filmed stroke by stroke to Bach."
+  },
+  {
+    "id": "w016",
+    "year": 1949,
     "title": "Begone Dull Care",
     "maker": "Norman McLaren & Evelyn Lambart",
-    "year": 1949,
+    "type": "Experimental & art",
+    "medium": "Direct on film",
+    "focus": "Sound & rhythm",
     "url": "https://www.youtube.com/watch?v=0r2COvWPO4Y&list=RD0r2COvWPO4Y&start_radio=1",
-    "tags": [
-      "direct animation",
-      "starter set"
-    ],
     "note": "Painted and scratched film cut to Oscar Peterson. Image follows sound."
   },
   {
-    "id": "s08",
+    "id": "w017",
+    "year": 1950,
+    "title": "Gerald McBoing-Boing",
+    "maker": "UPA",
+    "type": "Short film",
+    "medium": "Hand-drawn",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Flat, modernist cartoon style that broke away from Disney realism."
+  },
+  {
+    "id": "w018",
+    "year": 1955,
+    "title": "Blinkity Blank",
+    "maker": "Norman McLaren",
+    "type": "Experimental & art",
+    "medium": "Direct on film",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Images scratched on black film, many shown for a single frame."
+  },
+  {
+    "id": "w019",
+    "year": 1955,
     "title": "The Man with the Golden Arm (titles)",
     "maker": "Saul Bass",
-    "year": 1955,
+    "type": "Title sequence",
+    "medium": "Cut-out & collage",
+    "focus": "Typography",
     "url": "https://www.youtube.com/watch?v=PhwsLS1XolU",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "White bars on black. Often cited as the start of the modern title sequence."
   },
   {
-    "id": "s09",
+    "id": "w020",
+    "year": 1956,
+    "title": "Around the World in 80 Days (end titles)",
+    "maker": "Saul Bass",
+    "type": "Title sequence",
+    "medium": "Hand-drawn",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A six-minute animated end sequence that retells the film."
+  },
+  {
+    "id": "w021",
+    "year": 1958,
     "title": "Vertigo (titles)",
     "maker": "Saul Bass with John Whitney",
-    "year": 1958,
+    "type": "Title sequence",
+    "medium": "Analogue computer",
+    "focus": "Systems & rules",
     "url": "https://www.youtube.com/watch?v=SkLn8mamU78&t=61s",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "Spirals drawn with a mechanical analogue computer."
   },
   {
-    "id": "s10",
-    "title": "North by Northwest (titles)",
-    "maker": "Saul Bass",
+    "id": "w022",
     "year": 1959,
-    "url": "https://www.youtube.com/watch?v=1ON67uYwGaw&t=50s",
-    "tags": [
-      "title sequence",
-      "kinetic type",
-      "starter set"
-    ],
-    "note": "Type sliding along a grid that becomes a building facade."
-  },
-  {
-    "id": "s11",
     "title": "Anatomy of a Murder (titles)",
     "maker": "Saul Bass",
-    "year": 1959,
+    "type": "Title sequence",
+    "medium": "Cut-out & collage",
+    "focus": "Typography",
     "url": "https://www.youtube.com/watch?v=QccJ2L-7DVk",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "Cut-paper body parts animated to Ellington."
   },
   {
-    "id": "s12",
+    "id": "w023",
+    "year": 1959,
+    "title": "North by Northwest (titles)",
+    "maker": "Saul Bass",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "https://www.youtube.com/watch?v=1ON67uYwGaw&t=50s",
+    "note": "Type sliding along a grid that becomes a building facade."
+  },
+  {
+    "id": "w024",
+    "year": 1960,
+    "title": "Psycho (titles)",
+    "maker": "Saul Bass",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Grey bars slice the type apart. Graphic form as tension."
+  },
+  {
+    "id": "w025",
+    "year": 1961,
     "title": "Catalog",
     "maker": "John Whitney",
-    "year": 1961,
+    "type": "Experimental & art",
+    "medium": "Analogue computer",
+    "focus": "Systems & rules",
     "url": "https://www.youtube.com/watch?v=TbV7loKp69s&list=RDTbV7loKp69s&start_radio=1",
-    "tags": [
-      "computational",
-      "starter set"
-    ],
     "note": "A showreel of effects from his analogue computer. Motion as a system."
   },
   {
-    "id": "s13",
+    "id": "w026",
+    "year": 1962,
     "title": "Dr. No (titles)",
     "maker": "Maurice Binder",
-    "year": 1962,
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Abstraction",
     "url": "https://www.youtube.com/watch?v=oTo3YtPxG5k",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "Coloured dots and silhouettes. The template for every Bond opening."
   },
   {
-    "id": "s14",
+    "id": "w027",
+    "year": 1963,
+    "title": "Doctor Who (titles)",
+    "maker": "Bernard Lodge",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Light",
+    "url": "",
+    "note": "Video feedback, made by pointing a camera at its own monitor."
+  },
+  {
+    "id": "w028",
+    "year": 1963,
+    "title": "The Pink Panther (titles)",
+    "maker": "DePatie-Freleng",
+    "type": "Title sequence",
+    "medium": "Hand-drawn",
+    "focus": "Narrative",
+    "url": "",
+    "note": "The titles introduced a character who outgrew the film."
+  },
+  {
+    "id": "w029",
+    "year": 1964,
     "title": "Dr. Strangelove (titles)",
     "maker": "Pablo Ferro",
-    "year": 1964,
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
     "url": "https://www.youtube.com/watch?v=e5hX0RdD34s",
-    "tags": [
-      "title sequence",
-      "kinetic type",
-      "starter set"
-    ],
     "note": "Hand-drawn type laid over found footage of a B-52 refuelling."
   },
   {
-    "id": "s15",
+    "id": "w030",
+    "year": 1964,
+    "title": "Goldfinger (titles)",
+    "maker": "Robert Brownjohn",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Film and credits projected onto a painted body."
+  },
+  {
+    "id": "w031",
+    "year": 1966,
+    "title": "Lapis",
+    "maker": "James Whitney",
+    "type": "Experimental & art",
+    "medium": "Analogue computer",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Thousands of dots form slowly turning mandalas."
+  },
+  {
+    "id": "w032",
+    "year": 1968,
+    "title": "2001: A Space Odyssey (Star Gate)",
+    "maker": "Douglas Trumbull",
+    "type": "Feature film",
+    "medium": "Optical & live action",
+    "focus": "Light",
+    "url": "",
+    "note": "Slit-scan: long exposures through a moving slit stretch light into corridors."
+  },
+  {
+    "id": "w033",
+    "year": 1968,
+    "title": "Pas de deux",
+    "maker": "Norman McLaren",
+    "type": "Experimental & art",
+    "medium": "Optical & live action",
+    "focus": "Light",
+    "url": "",
+    "note": "Dancers multiplied with an optical printer. Movement left as a trail."
+  },
+  {
+    "id": "w034",
+    "year": 1968,
+    "title": "Permutations",
+    "maker": "John Whitney",
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Dot patterns from a digital computer, moving at related speeds."
+  },
+  {
+    "id": "w035",
+    "year": 1968,
+    "title": "Yellow Submarine",
+    "maker": "George Dunning",
+    "type": "Feature film",
+    "medium": "Hand-drawn",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Pop-art animation built around the Beatles' songs."
+  },
+  {
+    "id": "w036",
+    "year": 1970,
     "title": "Pixillation",
     "maker": "Lillian Schwartz",
-    "year": 1970,
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Systems & rules",
     "url": "",
-    "tags": [
-      "computational",
-      "starter set"
-    ],
     "note": "Computer-generated pattern made at Bell Labs, mixed with hand animation."
   },
   {
-    "id": "s16",
+    "id": "w037",
+    "year": 1971,
     "title": "Synchromy",
     "maker": "Norman McLaren",
-    "year": 1971,
+    "type": "Experimental & art",
+    "medium": "Direct on film",
+    "focus": "Sound & rhythm",
     "url": "https://www.youtube.com/watch?v=_UA40sL06sU",
-    "tags": [
-      "direct animation",
-      "starter set"
-    ],
     "note": "The soundtrack shapes are also the image. You see what you hear."
   },
   {
-    "id": "s17",
+    "id": "w038",
+    "year": 1974,
     "title": "Hunger",
     "maker": "Peter Foldes",
-    "year": 1974,
+    "type": "Short film",
+    "medium": "2D digital",
+    "focus": "Narrative",
     "url": "https://www.youtube.com/watch?v=vwU3UARE6yc&t=32s",
-    "tags": [
-      "computational",
-      "starter set"
-    ],
     "note": "Early computer key-frame interpolation. Drawings morph into each other."
   },
   {
-    "id": "s18",
+    "id": "w039",
+    "year": 1975,
     "title": "Arabesque",
     "maker": "John Whitney",
-    "year": 1975,
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Systems & rules",
     "url": "https://www.youtube.com/watch?v=cxkbScwt77g",
-    "tags": [
-      "computational",
-      "starter set"
-    ],
     "note": "Harmonic motion as a design principle. Points moving at related speeds."
   },
   {
-    "id": "s19",
+    "id": "w040",
+    "year": 1977,
+    "title": "Powers of Ten",
+    "maker": "Charles & Ray Eames",
+    "type": "Information & explainer",
+    "medium": "Optical & live action",
+    "focus": "Data & information",
+    "url": "",
+    "note": "A continuous zoom, out and back in, by factors of ten."
+  },
+  {
+    "id": "w041",
+    "year": 1977,
+    "title": "Star Wars (opening crawl)",
+    "maker": "Dan Perri",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Type receding into space. Text as a physical object."
+  },
+  {
+    "id": "w042",
+    "year": 1978,
     "title": "3/78 (Objects and Transformations)",
     "maker": "Larry Cuba",
-    "year": 1978,
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Systems & rules",
     "url": "https://vimeo.com/719688071",
-    "tags": [
-      "computational",
-      "starter set"
-    ],
     "note": "Sixteen points of light transforming. Minimal, strict, rule-based."
   },
   {
-    "id": "s20",
+    "id": "w043",
+    "year": 1978,
+    "title": "Superman (titles)",
+    "maker": "R/Greenberg Associates",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Streaking 3D type made with a motion-control camera."
+  },
+  {
+    "id": "w044",
+    "year": 1979,
+    "title": "Alien (titles)",
+    "maker": "R/Greenberg Associates",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Fragments of the title appear slowly over a dark planet."
+  },
+  {
+    "id": "w045",
+    "year": 1981,
     "title": "MTV launch identity",
     "maker": "Manhattan Design",
-    "year": 1981,
+    "type": "Ident & branding",
+    "medium": "Optical & live action",
+    "focus": "Archive & found footage",
     "url": "https://www.youtube.com/watch?v=eYUg0G0dvyI",
-    "tags": [
-      "broadcast identity",
-      "starter set"
-    ],
     "note": "A fixed logo shape with endlessly changing surfaces. Identity as variation."
   },
   {
-    "id": "s21",
+    "id": "w046",
+    "year": 1982,
+    "title": "Channel 4 ident",
+    "maker": "Martin Lambie-Nairn",
+    "type": "Ident & branding",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Coloured blocks fly together to form the 4."
+  },
+  {
+    "id": "w047",
+    "year": 1982,
+    "title": "Tron",
+    "maker": "Steven Lisberger",
+    "type": "Feature film",
+    "medium": "3D CG",
+    "focus": "Light",
+    "url": "",
+    "note": "One of the first feature films to use extensive computer graphics."
+  },
+  {
+    "id": "w048",
+    "year": 1985,
+    "title": "Take On Me",
+    "maker": "Steve Barron",
+    "type": "Music video",
+    "medium": "Hand-drawn",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Pencil-sketch rotoscoping moving in and out of live action."
+  },
+  {
+    "id": "w049",
+    "year": 1986,
+    "title": "Luxo Jr.",
+    "maker": "John Lasseter (Pixar)",
+    "type": "Short film",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Two desk lamps. Showed that computer animation could carry character."
+  },
+  {
+    "id": "w050",
+    "year": 1986,
+    "title": "Sledgehammer",
+    "maker": "Stephen R. Johnson",
+    "type": "Music video",
+    "medium": "Stop motion & physical",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Pixilation, claymation and objects animated around the singer."
+  },
+  {
+    "id": "w051",
+    "year": 1991,
+    "title": "Cape Fear (titles)",
+    "maker": "Saul Bass & Elaine Bass",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
+    "url": "",
+    "note": "Water distorts type, eyes and reflections."
+  },
+  {
+    "id": "w052",
+    "year": 1995,
+    "title": "Casino (titles)",
+    "maker": "Saul Bass & Elaine Bass",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Light",
+    "url": "",
+    "note": "A body falls through the neon of Las Vegas."
+  },
+  {
+    "id": "w053",
+    "year": 1995,
     "title": "Se7en (titles)",
     "maker": "Kyle Cooper",
-    "year": 1995,
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Typography",
     "url": "https://www.youtube.com/watch?v=-BJkDyCdw0c",
-    "tags": [
-      "title sequence",
-      "kinetic type",
-      "starter set"
-    ],
     "note": "Scratched, unstable type. Made the title sequence feel like evidence."
   },
   {
-    "id": "s22",
+    "id": "w054",
+    "year": 1997,
+    "title": "Around the World",
+    "maker": "Michel Gondry",
+    "type": "Music video",
+    "medium": "Optical & live action",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Each group of dancers moves to one instrument in the track."
+  },
+  {
+    "id": "w055",
+    "year": 1999,
+    "title": "Fight Club (titles)",
+    "maker": "Digital Domain",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A pull-back out of a brain's fear centre."
+  },
+  {
+    "id": "w056",
+    "year": 2001,
+    "title": "Six Feet Under (titles)",
+    "maker": "Digital Kitchen",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Quiet images of death and separation."
+  },
+  {
+    "id": "w057",
+    "year": 2002,
     "title": "Catch Me If You Can (titles)",
     "maker": "Kuntzel + Deygas",
-    "year": 2002,
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Narrative",
     "url": "https://www.youtube.com/watch?v=aN715Rp4L74",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "A flat graphic chase that openly borrows from Saul Bass."
   },
   {
-    "id": "s23",
+    "id": "w058",
+    "year": 2002,
+    "title": "Star Guitar",
+    "maker": "Michel Gondry",
+    "type": "Music video",
+    "medium": "Optical & live action",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "A view from a train, edited so passing buildings land on the beat."
+  },
+  {
+    "id": "w059",
+    "year": 2003,
+    "title": "Cog",
+    "maker": "Antoine Bardou-Jacquet",
+    "type": "Advertising",
+    "medium": "Optical & live action",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "A chain reaction of car parts, filmed for Honda."
+  },
+  {
+    "id": "w060",
+    "year": 2005,
+    "title": "Kiss Kiss Bang Bang (titles)",
+    "maker": "Danny Yount",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Typography",
+    "url": "",
+    "note": "A graphic, split-screen homage to 1960s titles."
+  },
+  {
+    "id": "w061",
+    "year": 2006,
+    "title": "Dexter (titles)",
+    "maker": "Digital Kitchen",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A morning routine shot so close it reads as violence."
+  },
+  {
+    "id": "w062",
+    "year": 2007,
+    "title": "Mad Men (titles)",
+    "maker": "Imaginary Forces",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A silhouetted man falls past advertising images."
+  },
+  {
+    "id": "w063",
+    "year": 2007,
+    "title": "Magnetosphere",
+    "maker": "Robert Hodgin",
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Sound & rhythm",
+    "url": "",
+    "note": "Particles driven by audio, written in Processing."
+  },
+  {
+    "id": "w064",
+    "year": 2008,
     "title": "AANAATT",
     "maker": "Max Hattler",
-    "year": 2008,
+    "type": "Experimental & art",
+    "medium": "Stop motion & physical",
+    "focus": "Abstraction",
     "url": "https://www.youtube.com/watch?v=kys3lRzOOEY",
-    "tags": [
-      "abstract film",
-      "starter set"
-    ],
     "note": "Physical objects shot frame by frame into geometric pattern."
   },
   {
-    "id": "s24",
+    "id": "w065",
+    "year": 2008,
+    "title": "test pattern",
+    "maker": "Ryoji Ikeda",
+    "type": "Experimental & art",
+    "medium": "Code & generative",
+    "focus": "Data & information",
+    "url": "",
+    "note": "Data turned into barcode-like patterns, synchronised to sound."
+  },
+  {
+    "id": "w066",
+    "year": 2009,
+    "title": "Enter the Void (titles)",
+    "maker": "Tom Kan",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Typography",
+    "url": "",
+    "note": "Fast, flashing type in many typefaces."
+  },
+  {
+    "id": "w067",
+    "year": 2009,
+    "title": "Watchmen (titles)",
+    "maker": "yU+co",
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Slow-motion tableaux that retell decades of an alternate history."
+  },
+  {
+    "id": "w068",
+    "year": 2011,
     "title": "Game of Thrones (titles)",
     "maker": "Elastic",
-    "year": 2011,
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
     "url": "https://www.youtube.com/watch?v=s7L2PVdrb_8",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "A clockwork map that builds itself. Information as mechanism."
   },
   {
-    "id": "s25",
+    "id": "w069",
+    "year": 2011,
+    "title": "The Girl with the Dragon Tattoo (titles)",
+    "maker": "Blur Studio",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Liquid black bodies in a nightmare set to Immigrant Song."
+  },
+  {
+    "id": "w070",
+    "year": 2012,
+    "title": "Skyfall (titles)",
+    "maker": "Daniel Kleinman",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A descent through symbols of the film's story."
+  },
+  {
+    "id": "w071",
+    "year": 2014,
+    "title": "Halt and Catch Fire (titles)",
+    "maker": "Elastic / Patrick Clair",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Circuit lines and pixel light from early computing."
+  },
+  {
+    "id": "w072",
+    "year": 2014,
     "title": "True Detective (titles)",
     "maker": "Elastic / Patrick Clair",
-    "year": 2014,
+    "type": "Title sequence",
+    "medium": "Optical & live action",
+    "focus": "Narrative",
     "url": "https://vimeo.com/84017154",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "Double exposures of people and landscape."
   },
   {
-    "id": "s26",
-    "title": "Godfather of Harlem (titles)",
-    "maker": "Digital Kitchen",
-    "year": 2019,
-    "url": "https://vimeo.com/359434772",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
-    "note": "based on found footage, archive material and collage"
+    "id": "w073",
+    "year": 2014,
+    "title": "Walking City",
+    "maker": "Universal Everything",
+    "type": "Experimental & art",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "A walking figure that keeps changing its form without breaking stride."
   },
   {
-    "id": "s27",
-    "title": "Split (titles)",
-    "maker": "Filmograph",
-    "year": 2017,
-    "url": "https://www.youtube.com/watch?v=LWEzamQjh3Q",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
-    "note": "type based, a more contemporary interpretation of Saul Bass' work. or Chris kyle in the international style"
+    "id": "w074",
+    "year": 2015,
+    "title": "Jessica Jones (titles)",
+    "maker": "Imaginary Forces",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Narrative",
+    "url": "",
+    "note": "Painterly, noir city images that drift between forms."
   },
   {
-    "id": "s28",
-    "title": "Westworld (Season 3) (titles)",
-    "maker": "Antibody",
-    "year": 2020,
-    "url": "https://www.youtube.com/watch?v=6PU74AObMfE",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
-    "note": "References to the Icarus mythology"
+    "id": "w075",
+    "year": 2016,
+    "title": "Order from Chaos",
+    "maker": "Maxime Causeret",
+    "type": "Music video",
+    "medium": "Code & generative",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Made for Max Cooper. Rain sounds organised into rhythm and form."
   },
   {
-    "id": "s29",
+    "id": "w076",
+    "year": 2016,
     "title": "Stranger Things (titles)",
     "maker": "Imaginary Forces",
-    "year": 2016,
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Typography",
     "url": "https://www.youtube.com/watch?v=-RcPZdihrp4",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
     "note": "Kinetic typography, references to horror book and film design of the period"
   },
   {
-    "id": "s30",
-    "title": "Manhattan (titles)",
-    "maker": "Imaginary Forces",
-    "year": 2014,
-    "url": "https://www.youtube.com/watch?v=0fV5WNudPPU",
-    "tags": [
-      "title sequence",
-      "starter set"
-    ],
-    "note": "Diagrammatic. Juxtaposing the humdrum realities of suburban living with the theoretical physics and hard math."
+    "id": "w077",
+    "year": 2016,
+    "title": "Westworld (titles)",
+    "maker": "Elastic / Patrick Clair",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Bodies and horses printed by machines."
   },
   {
-    "id": "s31",
-    "title": "Modular",
-    "maker": "Ash Thorp & Alasdair Willson",
+    "id": "w078",
+    "year": 2017,
+    "title": "Split (titles)",
+    "maker": "Filmograph",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Typography",
+    "url": "https://www.youtube.com/watch?v=LWEzamQjh3Q",
+    "note": "type based, a more contemporary interpretation of Saul Bass' work. or Chris kyle in the international style"
+  },
+  {
+    "id": "w079",
+    "year": 2018,
+    "title": "Spider-Man: Into the Spider-Verse",
+    "maker": "Sony Pictures Animation",
+    "type": "Feature film",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "3D animation drawn with print and comic-book techniques."
+  },
+  {
+    "id": "w080",
+    "year": 2019,
+    "title": "Godfather of Harlem (titles)",
+    "maker": "Digital Kitchen",
+    "type": "Title sequence",
+    "medium": "2D digital",
+    "focus": "Archive & found footage",
+    "url": "https://vimeo.com/359434772",
+    "note": "based on found footage, archive material and collage"
+  },
+  {
+    "id": "w081",
     "year": 2020,
-    "url": "https://www.youtube.com/watch?v=J8sCIG83y5s",
-    "tags": [
-      "Modular Motion",
-      "starter set"
-    ],
-    "note": "Modular visual and motion system."
+    "title": "Westworld (Season 3) (titles)",
+    "maker": "Antibody",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "https://www.youtube.com/watch?v=6PU74AObMfE",
+    "note": "References to the Icarus mythology"
+  },
+  {
+    "id": "w082",
+    "year": 2022,
+    "title": "House of the Dragon (titles)",
+    "maker": "Elastic",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Blood runs through a carved mechanism of family history."
+  },
+  {
+    "id": "w083",
+    "year": 2022,
+    "title": "Severance (titles)",
+    "maker": "Oliver Latta (Extraweg)",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Narrative",
+    "url": "",
+    "note": "A soft, surreal office world that bends the main character."
+  },
+  {
+    "id": "w084",
+    "year": 2023,
+    "title": "The Last of Us (titles)",
+    "maker": "Elastic",
+    "type": "Title sequence",
+    "medium": "3D CG",
+    "focus": "Systems & rules",
+    "url": "",
+    "note": "Fungal growth spreads over maps and shapes like a pattern."
   }
 ]
