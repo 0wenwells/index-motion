@@ -21,6 +21,7 @@
   --ink-4: #3a3a3a;   /*  1.8 : 1  soft rules only, never text */
   --hair:  #ffffff;
   --rule:  0.5px solid var(--hair);
+  --rule-soft: 0.5px solid var(--ink-4);   /* dividers that separate without framing */
 
   /* Type — role: size / line-height */
   --f: "aktiv-grotesk", "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -76,7 +77,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .strip { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
 .row { display: flex; align-items: stretch; padding-right: calc(100% - var(--col)); }   /* stretch: every decade rule ends at the same line */
 .dec { flex: 0 0 var(--col); scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
-.dec + .dec::before { content: ""; position: absolute; left: 0; top: calc(var(--axis, 40px) + 10px); bottom: 0; border-left: var(--rule); }
+.dec + .dec::before { content: ""; position: absolute; left: 0; top: calc(var(--axis, 40px) + 10px); bottom: 0; border-left: var(--rule-soft); }
 .dec.empty { flex-basis: var(--col-empty); color: var(--ink-2); }
 .ruler { padding: 10px 0 0; }
 svg { display: block; width: 100%; height: auto; }
