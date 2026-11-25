@@ -73,8 +73,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .view button { color: var(--ink-2); }
 .view button[aria-pressed="true"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .view button:hover { color: var(--ink); }
-.nav .clear { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
-.nav .clear:hover { color: var(--ink); }
+/* Active filters: one line under the title, each removable in one click */
+.active { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-top: 12px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
+.active .chip { color: var(--ink); }
+.active .chip::after { content: "\00a0\00d7"; color: var(--ink-2); }   /* × */
+.active .chip:hover { text-decoration: line-through; }
+.active .clear { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.active .clear:hover, .active .chip:hover::after { color: var(--ink); }
 
 /* Strip: one column per decade, newest on the left, scrolls sideways */
 .content { min-width: 0; padding-top: 24px; }
@@ -157,6 +162,7 @@ svg { display: block; width: 100%; height: auto; }
       <div class="sub">A working index of motion design</div>
       <nav class="nav" id="nav" aria-label="Decades and filters"></nav>
     </div>
+    <div class="active" id="active" hidden></div>
     <p class="status" id="status" hidden></p>
   </header>
 
@@ -330,13 +336,24 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       }), openKey));
     });
 
+    // Active filters, outside the menus: remove one, or clear all, without reopening anything
+    var act = $("active"); act.textContent = ""; act.hidden = !anyFilter();
     if (anyFilter()) {
+      act.appendChild(h("span", null, "Showing"));
+      FACETS.forEach(function (f) {
+        state.filters[f.key].forEach(function (v) {
+          var chip = h("button", "chip", v); chip.type = "button";
+          chip.setAttribute("aria-label", "Remove filter: " + v);
+          chip.addEventListener("click", function () { state.filters[f.key].delete(v); state.sel = null; hidePeek(); renderAll(); });
+          act.appendChild(chip);
+        });
+      });
       var c = h("button", "clear", "Clear filters"); c.type = "button";
       c.addEventListener("click", function () {
         FACETS.forEach(function (f) { state.filters[f.key].clear(); });
         closeMenus(); hidePeek(); renderAll();
       });
-      nav.appendChild(c);
+      act.appendChild(c);
     }
   }
   document.addEventListener("click", function (e) {
