@@ -140,12 +140,12 @@ svg { display: block; width: 100%; height: auto; }
 .work .t.playable::after { content: "\00a0\25B8"; color: var(--ink-2); }   /* non-breaking: the marker never sits alone on a line */
 
 /* Viewer: the playing work's decade column widens, everything else dims */
-.dec { transition: flex-basis var(--dur, 360ms) cubic-bezier(0.4, 0, 0.2, 1); }
+.dec { transition: flex-basis var(--dur) cubic-bezier(0.4, 0, 0.2, 1), opacity var(--dur) cubic-bezier(0.4, 0, 0.2, 1); }
 .dec.wide { flex-basis: min(var(--col-wide), calc(100vw - 32px)); }
 .dec.wide .ruler { position: relative; }
 .dec.wide .ruler svg { width: var(--col); }   /* the axis keeps its scale; a plain rule carries it across the extra width */
 .dec.wide .ruler::after { content: ""; position: absolute; left: var(--col); right: 0; top: calc(10px + var(--axis, 40px)); border-top: var(--rule); }
-.top, .dec, .work { transition: opacity var(--dur, 360ms) cubic-bezier(0.4, 0, 0.2, 1); }
+.top, .work { transition: opacity var(--dur) cubic-bezier(0.4, 0, 0.2, 1); }
 .theatre .top, .theatre .dec:not(.wide), .theatre .work:not(.playing), .theatre .dec.wide .ruler { opacity: 0.15; }
 .player { margin-top: 12px; cursor: default; }   /* no frame: the dimmed page already sets it apart */
 .player .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 0 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
@@ -409,18 +409,58 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
   }
   // ---------- Viewer: the work's decade column widens, the rest of the page dims, the video plays in place ----------
   function hidePeek() {}   // kept so older calls stay harmless
+  // Changes happen on the elements already on the page (no rebuild), so the column's width
+  // transition runs and the player grows out of the entry or still it replaces.
+  var calm = function () { return matchMedia("(prefers-reduced-motion: reduce)").matches; };
+  var DUR = 360;   // keep in step with --dur
+  function afterGrow(col, fn) {
+    var done = false, go = function () { if (!done) { done = true; fn(); } };
+    if (calm()) return go();
+    col.addEventListener("transitionend", function te(e) { if (e.target === col && e.propertyName === "flex-basis") { col.removeEventListener("transitionend", te); go(); } });
+    setTimeout(go, DUR + 80);   // fallback
+  }
   function play(id) {
+    if (state.playing === id) return;
+    if (state.playing) { state.playing = null; renderStrip(); }   // switching: the old one closes at once
+    var w = works.filter(function (x) { return x.id === id; })[0], src = w && embedUrl(w.url);
+    var li = $("w-" + id), col = li && li.closest(".dec");
+    if (!src || !li || !col) return;
     state.playing = id; state.sel = id; closeMenus();
-    renderStrip();
-    var col = document.querySelector(".dec.wide"), pl = document.querySelector(".player");
-    if (col) $("strip").scrollTo({ left: col.offsetLeft, behavior: "auto" });
-    if (pl) pl.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+
+    // Stage 1: build the player where the entry is
+    li.classList.add("playing", "sel");
+    if (li.classList.contains("img")) {
+      var fig = li.querySelector(".thumb"), pl = player(w, src);
+      li.replaceChild(pl, fig);
+      var cap = h("div", "cap"); cap.appendChild(h("span", "y", String(w.year))); cap.appendChild(h("span", null, w.note || ""));
+      li.appendChild(cap);
+      li.removeAttribute("tabindex");
+    } else {
+      li.querySelector("div").appendChild(player(w, src));
+    }
+    // Stage 2: widen the column and dim the rest, together
+    col.classList.add("wide");
+    document.body.classList.add("theatre");
+    var strip = $("strip"), maxLeft = col.offsetLeft;
+    if (strip.scrollLeft > maxLeft) strip.scrollTo({ left: maxLeft, behavior: calm() ? "auto" : "smooth" });
+    // Stage 3: once grown, nudge the page only if the player sits outside the window
+    afterGrow(col, function () {
+      var p = li.querySelector(".player"); if (!p) return;
+      var b = p.getBoundingClientRect();
+      if (b.left < 0 || b.right > innerWidth) strip.scrollTo({ left: col.offsetLeft, behavior: calm() ? "auto" : "smooth" });
+      if (b.top < 0 || b.bottom > innerHeight) p.scrollIntoView({ block: "nearest", behavior: calm() ? "auto" : "smooth" });
+    });
   }
   function stop() {
     if (!state.playing) return;
-    var id = state.playing; state.playing = null;
-    renderStrip();
-    var n = $("w-" + id); if (n) n.scrollIntoView({ block: "nearest", inline: "nearest" });
+    var id = state.playing, li = $("w-" + id), col = li && li.closest(".dec");
+    state.playing = null;
+    if (!col) { renderStrip(); return; }
+    // Reverse: the column narrows (the player shrinks with it) and the page lights up, then the entry is rebuilt
+    var f = li.querySelector("iframe"); if (f) f.remove();   // stop the sound at once
+    col.classList.remove("wide");
+    document.body.classList.remove("theatre");
+    afterGrow(col, function () { if (!state.playing) renderStrip(); });
   }
   function player(w, src) {
     var box = h("div", "player");
@@ -519,7 +559,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
         if (state.playing !== w.id) {
           li.tabIndex = 0; li.setAttribute("role", "button");
           li.setAttribute("aria-label", "Play " + w.title + (w.maker ? ", " + w.maker : ""));
-          li.addEventListener("click", function () { open(w, src); });
+          li.addEventListener("click", function (e) { e.stopPropagation(); open(w, src); });
           li.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target === li) { e.preventDefault(); open(w, src); } });
         }
         ol.appendChild(li);
@@ -557,7 +597,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     if (w.note) info.appendChild(h("p", null, w.note));
     fig.appendChild(info);
     li.appendChild(fig);
-    li.addEventListener("click", function () { open(w, src); });
+    li.addEventListener("click", function (e) { e.stopPropagation(); open(w, src); });
     li.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target === li) { e.preventDefault(); open(w, src); } });
     return li;
   }
