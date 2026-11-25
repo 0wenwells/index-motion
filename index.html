@@ -35,6 +35,10 @@
   --col: 312px;       /* one decade column — keep in step with COL in the script */
   --col-empty: 96px;  /* a decade with no works */
   --col-wide: 936px;  /* a decade column while its video plays: three columns */
+
+  /* Motion */
+  --dur: 360ms;       /* layout changes: column widening, dimming */
+  --dur-fast: 160ms;  /* small marks: the menu arrowhead */
 }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f); font-size: var(--s-body); line-height: var(--l-body); }
 [hidden] { display: none !important; }
@@ -61,10 +65,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* Menu marker, drawn in the timeline's cross line. Closed: an arrowhead pointing back at the label
    (the right half of a cross). Open: it turns 90° anticlockwise while the left half grows, and becomes the ×. */
 .mk { flex: 0 0 auto; align-self: center; width: 9px; height: 9px; overflow: visible;
-      transition: transform var(--dur, 360ms) cubic-bezier(0.4, 0, 0.2, 1); }
+      transition: transform var(--dur-fast) cubic-bezier(0.4, 0, 0.2, 1); }
 .mk path { fill: none; stroke: currentColor; stroke-width: 0.75; vector-effect: non-scaling-stroke;
            transform-box: view-box; transform-origin: center; }
-.mk .l { transform: scale(0); transition: transform var(--dur, 360ms) cubic-bezier(0.4, 0, 0.2, 1); }
+.mk .l { transform: scale(0); transition: transform var(--dur-fast) cubic-bezier(0.4, 0, 0.2, 1); }
 .dd[open] .mk { transform: rotate(-90deg); }   /* anticlockwise: the point turns down towards the panel; closing turns it back clockwise */
 .dd[open] .mk .l { transform: scale(1); }
 @media (prefers-reduced-motion: reduce) { .mk, .mk .l { transition: none; } }
