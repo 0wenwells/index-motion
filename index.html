@@ -435,6 +435,34 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       if (performance.now() < until && alive()) requestAnimationFrame(step);
     })();
   }
+  // Opening: while the column grows, the view moves with it so the player ends centred in the
+  // window, across and down. p (0 to 1) is how far the column has grown, so the camera move
+  // shares the column's easing and both finish together.
+  function focusOn(col, li, alive, until) {
+    var strip = $("strip"), s0 = strip.scrollLeft, w0 = col.offsetWidth, y0 = scrollY;
+    var wEnd = Math.min(parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--col-wide")) || 936, innerWidth - 32);
+    (function step() {
+      if (!col.isConnected || !alive()) return;
+      var view = strip.clientWidth, w = col.offsetWidth, l = col.offsetLeft;
+      var p = calm() ? 1 : Math.max(0, Math.min(1, (w - w0) / Math.max(1, wEnd - w0)));
+      // across: from where it was to the player centred in the timeline, kept inside the column's edges.
+      // The player sits inset in its column (year gutter, indent); its final centre is worked out from that inset.
+      var pl = li.querySelector(".player"), cr = col.getBoundingClientRect();
+      var inL = pl ? pl.getBoundingClientRect().left - cr.left : 0, inR = pl ? cr.right - pl.getBoundingClientRect().right : 0;
+      var endCentre = l + inL + (wEnd - inL - inR) / 2;
+      var t = s0 + p * ((endCentre - view / 2) - s0);
+      t = Math.min(Math.max(t, l + w - view), l);
+      strip.scrollLeft = Math.max(0, t);
+      // down: towards the player centred in the window (top never above the window's top)
+      if (pl) {
+        var b = pl.getBoundingClientRect();
+        var centre = scrollY + b.top + b.height / 2 - innerHeight / 2;
+        var topLine = scrollY + b.top - 24;
+        window.scrollTo(0, y0 + p * (Math.min(centre, topLine) - y0));
+      }
+      if (performance.now() < until) requestAnimationFrame(step);
+    })();
+  }
   function play(id) {
     if (state.playing === id) return;
     if (state.playing) { state.playing = null; renderStrip(); }   // switching: the old one closes at once
@@ -457,14 +485,8 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     // Stage 2: widen the column and dim the rest, together
     col.classList.add("wide");
     document.body.classList.add("theatre");
-    // The column grows about its centre; the timeline follows frame by frame
-    centred(col, performance.now() + (calm() ? 0 : DUR + 60), function () { return state.playing === id; });
-    // Stage 3: the page only moves up or down if the player's top would be out of sight
-    afterGrow(col, function () {
-      var p = li.querySelector(".player"); if (!p) return;
-      var b = p.getBoundingClientRect();
-      if (b.top < 0 || b.top > innerHeight - 120) p.scrollIntoView({ block: "nearest", behavior: calm() ? "auto" : "smooth" });
-    });
+    // Stage 3: the view moves with the growing column and settles with the player centred
+    focusOn(col, li, function () { return state.playing === id; }, performance.now() + (calm() ? 0 : DUR + 60));
   }
   function stop() {
     if (!state.playing) return;
