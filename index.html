@@ -89,7 +89,9 @@ svg { display: block; width: 100%; height: auto; }
 .ax-strong { font-family: var(--f); font-size: var(--s-meta); fill: var(--ink); }
 .dot { cursor: pointer; }
 .dot:focus { outline: none; }
-.dot:focus-visible circle, .dot.sel circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1.25; }
+.dot .x { stroke: var(--ink-2); stroke-width: 0.75; fill: none; }   /* a small cross marks each work on the axis */
+.dot:hover .x, .dot:focus-visible .x, .dot.sel .x { stroke: var(--ink); stroke-width: 1.25; }
+.ghost { stroke: var(--ink-4); stroke-width: 0.75; fill: none; }   /* filtered-out works */
 .none { padding: 10px var(--indent) 0; margin: 0; }
 
 .works { list-style: none; margin: 0; padding: 6px 0 0; }
@@ -399,6 +401,10 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
   // ---------- Strip ----------
   var RAD = 3.5, GAPV = RAD * 2 + 2.5;
   var COL = 312, COL_EMPTY = 96;   // keep in step with --col / --col-empty
+  // A cross centred on (cx, cy), arm length a
+  function cross(cx, cy, a, cls, parent) {
+    return el("path", { d: "M" + (cx - a) + " " + (cy - a) + "L" + (cx + a) + " " + (cy + a) + "M" + (cx - a) + " " + (cy + a) + "L" + (cx + a) + " " + (cy - a), class: cls }, parent);
+  }
   function ruler(dec, list, all, W, axisY) {
     // ten years, newest on the left; filtered-out works stay as faint marks on the line
     var x0 = 0, x1 = W, H = axisY + 16;
@@ -419,14 +425,16 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       all.forEach(function (w) { if (!shownIds[w.id]) ghosts[w.year] = (ghosts[w.year] || 0) + 1; });
       Object.keys(ghosts).forEach(function (yk) {
         var base = (stacks[yk] || []).length;
-        for (var i = 0; i < ghosts[yk]; i++) el("circle", { cx: sx(+yk + 0.5), cy: axisY - 4 - RAD - (base + i) * GAPV, r: 1.25, fill: "var(--ink-3)" }, svg);
+        for (var i = 0; i < ghosts[yk]; i++) cross(sx(+yk + 0.5), axisY - 4 - RAD - (base + i) * GAPV, 1.75, "ghost", svg);
       });
     }
     Object.keys(stacks).forEach(function (yk) {
       stacks[yk].forEach(function (w, i) {
         var g = el("g", { class: "dot" + (state.sel === w.id ? " sel" : ""), tabindex: 0, role: "button", "aria-label": w.year + ", " + w.title }, svg);
         el("title", {}, g).textContent = w.year + " · " + w.title + (w.maker ? " — " + w.maker : "");
-        el("circle", { cx: sx(w.year + 0.5), cy: axisY - 4 - RAD - i * GAPV, r: RAD, fill: "var(--ink)" }, g);
+        var cx = sx(w.year + 0.5), cy = axisY - 4 - RAD - i * GAPV;
+        el("circle", { cx: cx, cy: cy, r: RAD + 1, fill: "transparent" }, g);   // hit area, so the thin cross is easy to click
+        cross(cx, cy, 2.5, "x", g);
         var pick = function () { select(w.id); };
         g.addEventListener("click", pick);
         g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
