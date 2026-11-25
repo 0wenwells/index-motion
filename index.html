@@ -96,9 +96,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* Strip: one column per decade, newest on the left, scrolls sideways */
 .content { min-width: 0; padding-top: 24px; }
-.strip { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
+.strip { position: relative; overflow-x: auto; overscroll-behavior-x: contain; }   /* no scroll-snap: it re-snaps after every layout change and makes the viewer jump */
 .row { display: flex; align-items: stretch; padding-right: calc(100% - var(--col)); }   /* stretch: every decade rule ends at the same line */
-.dec { flex: 0 0 var(--col); scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
+.dec { flex: 0 0 var(--col); display: flex; flex-direction: column; position: relative; }
 .dec + .dec::before { content: ""; position: absolute; left: 0; top: calc(var(--axis, 40px) + 10px); bottom: 0; border-left: var(--rule-soft); }
 .dec.empty { flex-basis: var(--col-empty); color: var(--ink-2); }
 .ruler { padding: 10px 0 0; }
@@ -152,12 +152,11 @@ svg { display: block; width: 100%; height: auto; }
 .theatre .top, .theatre .dec:not(.wide), .theatre .work:not(.playing), .theatre .dec.wide .ruler { opacity: 0.15; }
 .player { margin-top: 12px; cursor: default; }   /* no frame: the dimmed page already sets it apart */
 .player .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 0 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
-.player .bar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.player .x { flex: 0 0 auto; width: 18px; height: 18px; position: relative; }
-.player .x::before, .player .x::after { content: ""; position: absolute; left: 3px; right: 3px; top: 50%; border-top: 1px solid var(--ink-2); }
-.player .x::before { transform: rotate(45deg); }
-.player .x::after { transform: rotate(-45deg); }
-.player .x:hover::before, .player .x:hover::after { border-color: var(--ink); }
+.player .bar span { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* a long title shortens; it can no longer push the × out of view */
+.player .x { flex: 0 0 auto; display: grid; place-items: center; width: 24px; height: 24px; margin-right: -7.5px; color: var(--ink-2); }   /* 24px target; the 9px cross sits flush with the player's right edge */
+.player .x svg { width: 9px; height: 9px; overflow: visible; }
+.player .x path { fill: none; stroke: currentColor; stroke-width: 0.75; vector-effect: non-scaling-stroke; }   /* same line as the timeline and menu crosses */
+.player .x:hover { color: var(--ink); }
 .player .frame { aspect-ratio: 16 / 9; background: #000; }
 .player iframe { width: 100%; height: 100%; border: 0; display: block; }
 .work.img.playing .player { margin-top: 0; }
@@ -422,6 +421,20 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     col.addEventListener("transitionend", function te(e) { if (e.target === col && e.propertyName === "flex-basis") { col.removeEventListener("transitionend", te); go(); } });
     setTimeout(go, DUR + 80);   // fallback
   }
+  // Grow or shrink a column about its own centre: each frame the timeline scrolls by half of
+  // the width change, so both edges move out (or in) equally. Clamped so the column stays visible.
+  function centred(col, until, alive) {
+    var strip = $("strip"), s0 = strip.scrollLeft, w0 = col.offsetWidth;
+    (function step() {
+      if (!col.isConnected) return;   // the timeline was rebuilt; this column no longer exists
+      var view = strip.clientWidth, w = col.offsetWidth, l = col.offsetLeft;
+      var t = s0 + (w - w0) / 2;
+      t = Math.max(t, l + w - view);   // right edge in view
+      t = Math.min(t, l);              // left edge in view (wins if the column is wider than the view)
+      strip.scrollLeft = Math.max(0, t);
+      if (performance.now() < until && alive()) requestAnimationFrame(step);
+    })();
+  }
   function play(id) {
     if (state.playing === id) return;
     if (state.playing) { state.playing = null; renderStrip(); }   // switching: the old one closes at once
@@ -444,14 +457,13 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     // Stage 2: widen the column and dim the rest, together
     col.classList.add("wide");
     document.body.classList.add("theatre");
-    var strip = $("strip"), maxLeft = col.offsetLeft;
-    if (strip.scrollLeft > maxLeft) strip.scrollTo({ left: maxLeft, behavior: calm() ? "auto" : "smooth" });
-    // Stage 3: once grown, nudge the page only if the player sits outside the window
+    // The column grows about its centre; the timeline follows frame by frame
+    centred(col, performance.now() + (calm() ? 0 : DUR + 60), function () { return state.playing === id; });
+    // Stage 3: the page only moves up or down if the player's top would be out of sight
     afterGrow(col, function () {
       var p = li.querySelector(".player"); if (!p) return;
       var b = p.getBoundingClientRect();
-      if (b.left < 0 || b.right > innerWidth) strip.scrollTo({ left: col.offsetLeft, behavior: calm() ? "auto" : "smooth" });
-      if (b.top < 0 || b.bottom > innerHeight) p.scrollIntoView({ block: "nearest", behavior: calm() ? "auto" : "smooth" });
+      if (b.top < 0 || b.top > innerHeight - 120) p.scrollIntoView({ block: "nearest", behavior: calm() ? "auto" : "smooth" });
     });
   }
   function stop() {
@@ -463,6 +475,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     var f = li.querySelector("iframe"); if (f) f.remove();   // stop the sound at once
     col.classList.remove("wide");
     document.body.classList.remove("theatre");
+    centred(col, performance.now() + (calm() ? 0 : DUR + 60), function () { return !state.playing; });   // shrinks about its centre too
     afterGrow(col, function () { if (!state.playing) renderStrip(); });
   }
   function player(w, src) {
@@ -470,6 +483,8 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     var bar = h("div", "bar");
     bar.appendChild(h("span", null, w.title + (w.maker ? " — " + w.maker : "")));
     var x = h("button", "x"); x.type = "button"; x.setAttribute("aria-label", "Close video");
+    var xs = el("svg", { viewBox: "-4 -4 8 8", "aria-hidden": "true" }, x);
+    el("path", { d: "M-4 -4L4 4M-4 4L4 -4" }, xs);
     x.addEventListener("click", function (e) { e.stopPropagation(); stop(); });
     bar.appendChild(x);
     var frame = h("div", "frame"), f = document.createElement("iframe");
