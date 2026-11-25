@@ -69,6 +69,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .panel button:hover .l { text-decoration: underline; text-underline-offset: 3px; }
 .panel .n { color: var(--ink-2); font-size: var(--s-meta); font-variant-numeric: tabular-nums; }
 .panel .zero { color: var(--ink-3); }
+.view { display: flex; gap: 12px; }
+.view button { color: var(--ink-2); }
+.view button[aria-pressed="true"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.view button:hover { color: var(--ink); }
 .nav .clear { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 .nav .clear:hover { color: var(--ink); }
 
@@ -99,6 +103,25 @@ svg { display: block; width: 100%; height: auto; }
 .work .links { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; font-size: var(--s-meta); line-height: var(--l-meta); }
 .work .links a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
 .work.sel .t { text-decoration: underline; text-underline-offset: 2px; }
+/* Image view */
+.work.img { display: block; padding: 6px var(--indent); }
+.work.img:focus-visible { outline: none; }
+.thumb { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0d0d0d; }
+.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.fallback { position: absolute; inset: 0; display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 0 12px; align-content: start; padding: 12px; border: 0.5px solid var(--ink-4); }
+.fallback .y { font-size: var(--s-meta); line-height: var(--l-body); color: var(--ink-3); }
+.fallback .ft { color: var(--ink-3); }
+.info { position: absolute; inset: 0; padding: 12px; overflow: hidden; background: rgba(0, 0, 0, 0.86); opacity: 0; transition: opacity 120ms; display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 0 12px; align-content: start; }
+.info > :not(.y) { grid-column: 2; }
+.info .y { grid-row: 1; font-size: var(--s-meta); line-height: var(--l-title); color: var(--ink-2); }
+.info .t { grid-row: 1; }
+.info p { margin: 6px 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.info .go { margin-top: 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.work.img:hover .info, .work.img:focus-within .info, .work.img:focus-visible .info, .work.img.sel .info { opacity: 1; }
+.work.img:focus-visible .thumb { outline: 1px solid var(--ink); outline-offset: 2px; }
+@media (hover: none) { .info { opacity: 1; background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.9)); align-content: end; } .info p { display: none; } }
+@media (prefers-reduced-motion: reduce) { .info { transition: none; } }
+
 .work .t.playable::after { content: "\00a0\25B8"; color: var(--ink-2); }   /* non-breaking: the marker never sits alone on a line */
 
 /* Video player: opens on hover or click, stays until closed */
@@ -158,7 +181,8 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
   ];
 
   var works = [];
-  var state = { dec: null, sel: null, filters: { type: new Set(), medium: new Set(), focus: new Set() } };
+  var state = { dec: null, sel: null, view: "list", filters: { type: new Set(), medium: new Set(), focus: new Set() } };
+  try { if (localStorage.getItem("im-view") === "images") state.view = "images"; } catch (e) {}
 
   var $ = function (id) { return document.getElementById(id); };
   var SVGNS = "http://www.w3.org/2000/svg";
@@ -184,7 +208,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
     return rows;
   }
-  var HEAD = { year: "year", title: "title", madeby: "maker", maker: "maker", type: "type", medium: "medium", focus: "focus", link: "url", url: "url", note: "note", notes: "note", description: "note" };
+  var HEAD = { year: "year", title: "title", madeby: "maker", maker: "maker", type: "type", medium: "medium", focus: "focus", link: "url", url: "url", note: "note", notes: "note", description: "note", image: "image", thumbnail: "image", still: "image" };
   function fromCSV(text) {
     var rows = parseCSV(text);
     if (!rows.length) return [];
@@ -201,7 +225,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       return {
         id: String(w.id || "w" + i), year: y, title: String(w.title || "").trim(), maker: String(w.maker || "").trim(),
         type: String(w.type || "").trim(), medium: String(w.medium || "").trim(), focus: String(w.focus || "").trim(),
-        url: String(w.url || "").trim(), note: String(w.note || "").trim()
+        url: String(w.url || "").trim(), note: String(w.note || "").trim(), image: String(w.image || "").trim()
       };
     }).filter(function (w) { return w.title && w.year >= 1800 && w.year <= NOW_YEAR; });
   }
@@ -269,6 +293,19 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     var was = nav.querySelector("details[open]"), openKey = was ? was.dataset.key : null;
     nav.textContent = "";
 
+    // View: list or images
+    var vt = h("div", "view"); vt.setAttribute("role", "group"); vt.setAttribute("aria-label", "View");
+    [["list", "List"], ["images", "Images"]].forEach(function (o) {
+      var b = h("button", null, o[1]); b.type = "button";
+      b.setAttribute("aria-pressed", state.view === o[0] ? "true" : "false");
+      b.addEventListener("click", function () {
+        state.view = o[0]; try { localStorage.setItem("im-view", o[0]); } catch (e) {}
+        closeMenus(); hidePeek(); renderAll();
+      });
+      vt.appendChild(b);
+    });
+    nav.appendChild(vt);
+
     // Decade: a jump, so the menu closes after a pick
     nav.appendChild(dropdown("dec", "Decade", state.dec != null ? state.dec + "s" : "", decades().map(function (d) {
       return { label: d.dec + "s", n: d.list.length, on: state.dec === d.dec,
@@ -318,6 +355,15 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     if (m) return "https://player.vimeo.com/video/" + m[1] + "?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&dnt=1";
     m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
     if (m) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&mute=1&loop=1&playlist=" + m[1] + "&controls=1&playsinline=1";
+    return null;
+  }
+  // Still for image view: an "image" column wins; otherwise taken from the YouTube or Vimeo link
+  function thumbUrl(w) {
+    if (w.image) return w.image;
+    var m = w.url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    if (m) return "https://i.ytimg.com/vi/" + m[1] + "/mqdefault.jpg";
+    m = w.url.match(/vimeo\.com\/(?:.*\/)?(\d{5,})/);
+    if (m) return "https://vumbnail.com/" + m[1] + ".jpg";
     return null;
   }
   var peek = null, peekTimer = null, peekSrc = null, canHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -401,6 +447,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       if (!d.list.length) { col.appendChild(h("p", "none", anyFilter() && d.all.length ? "Nothing matching" : "Nothing recorded")); row.appendChild(col); return; }
       var ol = h("ol", "works");
       d.list.forEach(function (w) {
+        if (state.view === "images") { ol.appendChild(imageTile(w)); return; }
         var li = h("li", "work" + (state.sel === w.id ? " sel" : "")); li.id = "w-" + w.id;
         li.appendChild(h("span", "y", String(w.year)));
         var body = h("div"); body.style.minWidth = "0";
@@ -422,6 +469,38 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       col.appendChild(ol); row.appendChild(col);
     });
     $("strip").scrollLeft = keep;
+  }
+
+  // Image view: one still per work; details appear on hover or keyboard focus
+  function findLink(w) {
+    return w.url || "https://www.youtube.com/results?search_query=" + encodeURIComponent(w.title.replace(/\s*\(titles\)\s*/i, " titles ").trim() + " " + w.maker);
+  }
+  function imageTile(w) {
+    var li = h("li", "work img" + (state.sel === w.id ? " sel" : "")); li.id = "w-" + w.id; li.tabIndex = 0;
+    li.setAttribute("aria-label", w.year + ", " + w.title + (w.maker ? ", " + w.maker : ""));
+    var fig = h("div", "thumb"), src = embedUrl(w.url), still = thumbUrl(w);
+    var fall = h("div", "fallback"); fall.appendChild(h("span", "y", String(w.year))); fall.appendChild(h("span", "ft", w.title));
+    fig.appendChild(fall);
+    if (still) {
+      var img = document.createElement("img"); img.alt = ""; img.loading = "lazy"; img.decoding = "async"; img.src = still;
+      img.addEventListener("error", function () { img.remove(); });
+      fig.appendChild(img);
+    }
+    var info = h("div", "info");
+    info.appendChild(h("span", "y", String(w.year)));
+    var t = h("div", "t" + (src ? " playable" : ""), w.title); info.appendChild(t);
+    if (w.maker) info.appendChild(h("div", "m", w.maker));
+    if (w.note) info.appendChild(h("p", null, w.note));
+    var a = document.createElement("a"); a.className = "go"; a.target = "_blank"; a.rel = "noopener";
+    a.href = findLink(w); a.textContent = w.url ? "Watch ↗" : "Find on YouTube ↗";
+    a.addEventListener("click", function (e) { e.stopPropagation(); });
+    info.appendChild(a);
+    fig.appendChild(info);
+    li.appendChild(fig);
+    var open = function () { if (src) { clearTimeout(peekTimer); openPeek(fig, src); } };
+    li.addEventListener("click", open);
+    li.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target === li) { e.preventDefault(); open(); } });
+    return li;
   }
 
   function select(id) {
