@@ -46,27 +46,33 @@ a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
 :focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
 
-/* Grid: index column 1/8, timeline 7/8 */
-.grid { display: grid; grid-template-columns: 12.5% minmax(0, 1fr); }
-header.grid { padding-bottom: 24px; align-items: start; }
-header .sub { padding-left: var(--indent); }
-.body { align-items: start; }
+/* Top: one line — name, subtitle, then the menus pushed to the right. No outlines. */
+.mast { display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: baseline; }
+.mast .sub { color: var(--ink-2); }
+.nav { display: flex; flex-wrap: wrap; gap: 0 24px; margin-left: auto; }
+.status { margin: 6px 0 0; color: var(--ink-2); }
 
-/* Index column: decades, then the three tag groups */
-.index { padding-right: 16px; }
-.index ol { list-style: none; margin: 0; padding: 0; }
-.index li { border-bottom: var(--rule); }
-.index button { display: flex; justify-content: space-between; gap: 6px; width: 100%; padding: 6px 0; }   /* 30px row, as index.ai */
-.index button[aria-current="true"], .index button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 3px; }
-.index .n { color: var(--ink-2); font-size: var(--s-meta); font-variant-numeric: tabular-nums; }
-.index .zero { color: var(--ink-3); }
-.facet { margin-top: 36px; }
-.facet h2 { font: inherit; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); margin: 0 0 6px; }
-.clear { margin-top: 36px; text-decoration: underline; text-underline-offset: 3px; }
-.status { margin-top: 36px; color: var(--ink-2); }
+/* Dropdown: native <details>, one open at a time */
+.dd { position: relative; }
+.dd summary { list-style: none; display: flex; gap: 6px; align-items: baseline; cursor: pointer; white-space: nowrap; color: var(--ink-2); }
+.dd summary::-webkit-details-marker { display: none; }
+.dd summary::after { content: "\25BE"; font-size: var(--s-meta); }
+.dd[open] summary::after { content: "\25B4"; }
+.dd summary .v { color: var(--ink); font-size: var(--s-meta); font-variant-numeric: tabular-nums; }   /* active state shows in white */
+.dd summary:hover, .dd[open] summary { color: var(--ink); }
+.dd[open] summary > span:first-child { text-decoration: underline; text-underline-offset: 3px; }
+.panel { position: absolute; z-index: 30; top: calc(100% + 6px); right: 0; min-width: 264px; max-height: min(60vh, 540px); overflow-y: auto; margin: 0; padding: 0 var(--indent); list-style: none; background: var(--paper); border: var(--rule); }
+.panel li + li { border-top: 0.5px solid var(--ink-4); }
+.panel button { display: flex; justify-content: space-between; gap: 12px; width: 100%; padding: 6px 0; }
+.panel button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 3px; }
+.panel button:hover .l { text-decoration: underline; text-underline-offset: 3px; }
+.panel .n { color: var(--ink-2); font-size: var(--s-meta); font-variant-numeric: tabular-nums; }
+.panel .zero { color: var(--ink-3); }
+.nav .clear { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.nav .clear:hover { color: var(--ink); }
 
 /* Strip: one column per decade, newest on the left, scrolls sideways */
-.content { min-width: 0; }
+.content { min-width: 0; padding-top: 24px; }
 .strip { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
 .row { display: flex; align-items: stretch; padding-right: calc(100% - var(--col)); }   /* stretch: every decade rule ends at the same line */
 .dec { flex: 0 0 var(--col); scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
@@ -108,14 +114,10 @@ svg { display: block; width: 100%; height: auto; }
 #peek iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 @media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
-  header .sub { padding-left: 0; margin-top: 6px; }
-  .index { padding-right: 0; margin-bottom: 16px; }
-  .index ol { display: flex; flex-wrap: wrap; }
-  .index li { border-bottom: 0; }
-  .index button { padding: 5px 14px 5px 0; }
-  .index .n { display: none; }
-  .facet, .clear, .status { margin-top: 12px; }
+  .mast { position: relative; }
+  .nav { margin-left: 0; width: 100%; }
+  .dd { position: static; }
+  .panel { left: 0; right: 0; min-width: 0; }
   .row { padding-right: 0; }
   .dec { flex-basis: 240px; }
 }
@@ -123,22 +125,18 @@ svg { display: block; width: 100%; height: auto; }
 </head>
 <body>
 <div id="app">
-  <header class="grid">
-    <div>index.motion</div>
-    <div class="sub">A working index of motion design</div>
+  <header class="top">
+    <div class="mast">
+      <div>index.motion</div>
+      <div class="sub">A working index of motion design</div>
+      <nav class="nav" id="nav" aria-label="Decades and filters"></nav>
+    </div>
+    <p class="status" id="status" hidden></p>
   </header>
 
-  <div class="grid body">
-    <nav class="index" aria-label="Decades and filters">
-      <ol id="decades"></ol>
-      <div id="facets"></div>
-      <button type="button" class="clear" id="clear" hidden>Clear filters</button>
-      <div class="status" id="status" hidden></div>
-    </nav>
-    <main class="content">
-      <div class="strip" id="strip" tabindex="0" aria-label="Timeline, newest on the left. Scroll sideways for older decades."><div class="row" id="row"></div></div>
-    </main>
-  </div>
+  <main class="content">
+    <div class="strip" id="strip" tabindex="0" aria-label="Timeline, newest on the left. Scroll sideways for older decades."><div class="row" id="row"></div></div>
+  </main>
 </div>
 
 <script>
@@ -242,49 +240,70 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     return out;
   }
 
-  // ---------- Index column ----------
-  function renderIndex() {
-    var ol = $("decades"); ol.textContent = "";
-    decades().forEach(function (d) {
+  // ---------- Navigation: decade + one dropdown per tag group ----------
+  function closeMenus(except) {
+    document.querySelectorAll("#nav details[open]").forEach(function (d) { if (d !== except) d.open = false; });
+  }
+  function dropdown(key, label, value, items, openKey) {
+    var d = h("details", "dd"); d.dataset.key = key;
+    if (openKey === key) d.open = true;
+    var s = h("summary"); s.appendChild(h("span", null, label));
+    if (value) s.appendChild(h("span", "v", value));
+    d.appendChild(s);
+    var ol = h("ol", "panel");
+    items.forEach(function (it) {
       var li = h("li"), b = h("button"); b.type = "button";
-      b.appendChild(h("span", null, d.dec + "s"));
-      b.appendChild(h("span", "n", String(d.list.length)));
-      b.setAttribute("aria-current", state.dec === d.dec ? "true" : "false");
-      b.addEventListener("click", function () { state.dec = d.dec; renderIndex(); jumpTo(d.dec); });
+      b.appendChild(h("span", "l", it.label));
+      b.appendChild(h("span", "n" + (it.n ? "" : " zero"), String(it.n)));
+      b.setAttribute("aria-pressed", it.on ? "true" : "false");
+      b.addEventListener("click", it.pick);
       li.appendChild(b); ol.appendChild(li);
     });
+    d.appendChild(ol);
+    d.addEventListener("toggle", function () { if (d.open) closeMenus(d); });
+    return d;
+  }
+  function renderIndex() {
+    var nav = $("nav");
+    var was = nav.querySelector("details[open]"), openKey = was ? was.dataset.key : null;
+    nav.textContent = "";
 
-    var box = $("facets"); box.textContent = "";
+    // Decade: a jump, so the menu closes after a pick
+    nav.appendChild(dropdown("dec", "Decade", state.dec != null ? state.dec + "s" : "", decades().map(function (d) {
+      return { label: d.dec + "s", n: d.list.length, on: state.dec === d.dec,
+        pick: function () { state.dec = d.dec; closeMenus(); renderIndex(); jumpTo(d.dec); } };
+    }), openKey));
+
+    // Tag groups: filters, so the menu stays open for several picks
     FACETS.forEach(function (f) {
       // counts respect the other groups' filters, so you can see what a click will leave
-      var counts = {};
+      var counts = {}, values = {};
       works.forEach(function (w) { if (w[f.key] && matches(w, f.key)) counts[w[f.key]] = (counts[w[f.key]] || 0) + 1; });
-      var values = {};
       works.forEach(function (w) { if (w[f.key]) values[w[f.key]] = true; });
       var keys = Object.keys(values).sort();
       if (!keys.length) return;
-      var sec = h("section", "facet"); sec.appendChild(h("h2", null, f.label));
-      var list = h("ol");
-      keys.forEach(function (v) {
-        var li = h("li"), b = h("button"); b.type = "button";
-        var n = counts[v] || 0, on = state.filters[f.key].has(v);
-        b.appendChild(h("span", null, v));
-        b.appendChild(h("span", "n" + (n ? "" : " zero"), String(n)));
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-        b.addEventListener("click", function () {
-          if (on) state.filters[f.key].delete(v); else state.filters[f.key].add(v);
-          state.sel = null; hidePeek(); renderAll();
-        });
-        li.appendChild(b); list.appendChild(li);
-      });
-      sec.appendChild(list); box.appendChild(sec);
+      var sel = state.filters[f.key];
+      nav.appendChild(dropdown(f.key, f.label, sel.size ? String(sel.size) : "", keys.map(function (v) {
+        var on = sel.has(v);
+        return { label: v, n: counts[v] || 0, on: on,
+          pick: function () { if (on) sel.delete(v); else sel.add(v); state.sel = null; hidePeek(); renderAll(); } };
+      }), openKey));
     });
-    $("clear").hidden = !anyFilter();
+
+    if (anyFilter()) {
+      var c = h("button", "clear", "Clear filters"); c.type = "button";
+      c.addEventListener("click", function () {
+        FACETS.forEach(function (f) { state.filters[f.key].clear(); });
+        closeMenus(); hidePeek(); renderAll();
+      });
+      nav.appendChild(c);
+    }
   }
-  $("clear").addEventListener("click", function () {
-    FACETS.forEach(function (f) { state.filters[f.key].clear(); });
-    hidePeek(); renderAll();
+  document.addEventListener("click", function (e) {
+    // a pick re-renders the nav, so its button is already detached by the time the click arrives here
+    if (e.target.isConnected && !e.target.closest("#nav")) closeMenus();
   });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenus(); });
   function jumpTo(dec) {
     var col = $("d-" + dec), strip = $("strip");
     if (!col) return;
