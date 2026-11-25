@@ -149,7 +149,6 @@ svg { display: block; width: 100%; height: auto; }
 .dec.wide { flex-basis: min(var(--col-wide), calc(100vw - 32px)); }
 .dec.wide .ruler { position: relative; }
 .dec.wide .ruler svg { width: var(--col); }   /* the axis keeps its scale; a plain rule carries it across the extra width */
-.dec.wide .ruler::after { content: ""; position: absolute; left: var(--col); right: 0; top: calc(10px + var(--axis, 40px)); border-top: var(--rule); }
 .top, .work { transition: opacity var(--dur) cubic-bezier(0.4, 0, 0.2, 1); }
 .theatre .top, .theatre .dec:not(.wide), .theatre .work:not(.playing), .theatre .dec.wide .ruler { opacity: 0.15; }
 .player { margin-top: 12px; cursor: default; }   /* no frame: the dimmed page already sets it apart */
@@ -541,7 +540,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     var x0 = 0, x1 = W, H = axisY + 16;
     var sx = function (y) { return x1 - (y - dec) / 10 * (x1 - x0); }; // y = start of year
     var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "group", "aria-label": dec + "s, " + list.length + " works" });
-    el("line", { x1: x0, x2: x1, y1: axisY, y2: axisY, stroke: "var(--hair)", "stroke-width": 0.5 }, svg);
+    // no horizontal axis: time is carried by the year ticks and the decade dividers alone
     for (var y = dec; y <= dec + 9; y++) {
       if (y > NOW_YEAR) continue;
       var tx = sx(y), isDec = y === dec, mid = y === dec + 5;
