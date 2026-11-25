@@ -4,27 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>index.motion</title>
+<!-- FONT: Aktiv Grotesk via Adobe Fonts (same kit as index.ai) -->
+<link rel="stylesheet" href="https://use.typekit.net/onp4cuh.css">
 <style>
-/* Single theme: white linework and type on black. One type size throughout. */
+/* Single theme: white linework and type on black.
+   System: Specimen 01, scale A. Four type roles on a 6px baseline;
+   every line-height and vertical gap is a multiple of 6. */
 :root {
-  --paper: #000000;
-  --ink: #ffffff;
-  --ink-2: #9a9a9a;
-  --ink-3: #4d4d4d;
-  --hair: #ffffff;
   color-scheme: dark;
-  --f: "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --s: 9px;
+
+  /* Colour — contrast on black in brackets */
+  --paper: #000000;
+  --ink:   #ffffff;   /* 21.0 : 1  titles, active state */
+  --ink-2: #9a9a9a;   /*  7.5 : 1  notes, makers, meta */
+  --ink-3: #6b6b6b;   /*  3.9 : 1  counts, zero states, ghost dots (was #4d4d4d) */
+  --ink-4: #3a3a3a;   /*  1.8 : 1  soft rules only, never text */
+  --hair:  #ffffff;
+  --rule:  0.5px solid var(--hair);
+
+  /* Type — role: size / line-height */
+  --f: "aktiv-grotesk", "Aktiv Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --s-meta:  9px;  --l-meta:  12px;   /* years, makers, counts, axis labels */
+  --s-body:  12px; --l-body:  18px;   /* notes, navigation */
+  --s-title: 18px; --l-title: 24px;   /* work titles */
+
+  /* Space */
+  --u: 6px;           /* baseline half-unit */
   --indent: 12px;
-  --rule: 0.5px solid var(--hair);
+  --col: 312px;       /* one decade column — keep in step with COL in the script */
+  --col-empty: 96px;  /* a decade with no works */
 }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f); font-size: var(--s); line-height: 1.35; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f); font-size: var(--s-body); line-height: var(--l-body); }
 [hidden] { display: none !important; }
 #app {
   max-width: 1200px; margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 28px 64px;
+  padding-block: 24px 72px;
 }
 a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
@@ -40,42 +56,43 @@ header .sub { padding-left: var(--indent); }
 .index { padding-right: 16px; }
 .index ol { list-style: none; margin: 0; padding: 0; }
 .index li { border-bottom: var(--rule); }
-.index button { display: flex; justify-content: space-between; gap: 6px; width: 100%; padding: 6px 0 7px; }
+.index button { display: flex; justify-content: space-between; gap: 6px; width: 100%; padding: 6px 0; }   /* 30px row, as index.ai */
 .index button[aria-current="true"], .index button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 3px; }
-.index .n { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.index .n { color: var(--ink-2); font-size: var(--s-meta); font-variant-numeric: tabular-nums; }
 .index .zero { color: var(--ink-3); }
-.facet { margin-top: 22px; }
-.facet h2 { font: inherit; color: var(--ink-2); margin: 0 0 2px; }
-.clear { margin-top: 22px; text-decoration: underline; text-underline-offset: 3px; }
-.status { margin-top: 22px; color: var(--ink-2); }
+.facet { margin-top: 36px; }
+.facet h2 { font: inherit; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); margin: 0 0 6px; }
+.clear { margin-top: 36px; text-decoration: underline; text-underline-offset: 3px; }
+.status { margin-top: 36px; color: var(--ink-2); }
 
 /* Strip: one column per decade, newest on the left, scrolls sideways */
 .content { min-width: 0; }
 .strip { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
-.row { display: flex; align-items: flex-start; padding-right: calc(100% - 260px); }
-.dec { flex: 0 0 260px; scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
+.row { display: flex; align-items: stretch; padding-right: calc(100% - var(--col)); }   /* stretch: every decade rule ends at the same line */
+.dec { flex: 0 0 var(--col); scroll-snap-align: start; display: flex; flex-direction: column; position: relative; }
 .dec + .dec::before { content: ""; position: absolute; left: 0; top: calc(var(--axis, 40px) + 10px); bottom: 0; border-left: var(--rule); }
-.dec.empty { flex-basis: 96px; color: var(--ink-2); }
+.dec.empty { flex-basis: var(--col-empty); color: var(--ink-2); }
 .ruler { padding: 10px 0 0; }
 svg { display: block; width: 100%; height: auto; }
-.ax { font-family: var(--f); font-size: 9px; fill: var(--ink-2); }
-.ax-strong { font-family: var(--f); font-size: 9px; fill: var(--ink); }
+.ax { font-family: var(--f); font-size: var(--s-meta); fill: var(--ink-2); }
+.ax-strong { font-family: var(--f); font-size: var(--s-meta); fill: var(--ink); }
 .dot { cursor: pointer; }
 .dot:focus { outline: none; }
 .dot:focus-visible circle, .dot.sel circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1.25; }
 .none { padding: 10px var(--indent) 0; margin: 0; }
 
-.works { list-style: none; margin: 0; padding: 4px 0 0; }
-.work { padding: 10px var(--indent); cursor: pointer; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 0 6px; }
+.works { list-style: none; margin: 0; padding: 6px 0 0; }
+.work { padding: 12px var(--indent); cursor: pointer; display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 0 12px; }
 .work:last-child { padding-bottom: 0; }
 .work:hover .t { text-decoration: underline; text-underline-offset: 2px; }
-.work .y { font-variant-numeric: tabular-nums; color: var(--ink-2); }
-.work .m, .work p { color: var(--ink-2); }
-.work p { margin: 4px 0 0; }
-.work .links { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
+.work .y { font-size: var(--s-meta); line-height: var(--l-title); font-variant-numeric: tabular-nums; color: var(--ink-2); }   /* sits on the title's line */
+.work .t { font-size: var(--s-title); line-height: var(--l-title); }
+.work .m { font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
+.work p { margin: 6px 0 0; color: var(--ink-2); }
+.work .links { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; font-size: var(--s-meta); line-height: var(--l-meta); }
 .work .links a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
 .work.sel .t { text-decoration: underline; text-underline-offset: 2px; }
-.work .t.playable::after { content: " \25B8"; color: var(--ink-2); }
+.work .t.playable::after { content: "\00a0\25B8"; color: var(--ink-2); }   /* non-breaking: the marker never sits alone on a line */
 
 /* Video player: opens on hover or click, stays until closed */
 #peek { position: absolute; z-index: 20; width: 420px; max-width: calc(100vw - 32px); background: var(--paper); border: var(--rule); }
@@ -315,6 +332,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
 
   // ---------- Strip ----------
   var RAD = 3.5, GAPV = RAD * 2 + 2.5;
+  var COL = 312, COL_EMPTY = 96;   // keep in step with --col / --col-empty
   function ruler(dec, list, all, W, axisY) {
     // ten years, newest on the left; filtered-out works stay as faint marks on the line
     var x0 = 0, x1 = W, H = axisY + 16;
@@ -359,7 +377,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     row.style.setProperty("--axis", axisY + "px");
     decades().forEach(function (d) {
       var col = h("section", "dec" + (d.list.length ? "" : " empty")); col.id = "d-" + d.dec;
-      var r = h("div", "ruler"); r.appendChild(ruler(d.dec, d.list, d.all, d.list.length ? 260 : 96, axisY)); col.appendChild(r);
+      var r = h("div", "ruler"); r.appendChild(ruler(d.dec, d.list, d.all, d.list.length ? COL : COL_EMPTY, axisY)); col.appendChild(r);
       if (!d.list.length) { col.appendChild(h("p", "none", anyFilter() && d.all.length ? "Nothing matching" : "Nothing recorded")); row.appendChild(col); return; }
       var ol = h("ol", "works");
       d.list.forEach(function (w) {
