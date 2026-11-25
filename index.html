@@ -126,7 +126,7 @@ svg { display: block; width: 100%; height: auto; }
 .work.img { display: block; padding: 6px var(--indent); }
 .work.img:focus-visible { outline: none; }
 .thumb { position: relative; aspect-ratio: 40 / 9; overflow: hidden; background: #0d0d0d; }   /* 2/5 the height of a 16:9 still */
-.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; }   /* the band shown is the vertical centre of the frame */
+.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; filter: grayscale(1); }   /* centre band of the frame; black and white so stills from different sources sit together */
 .fallback { position: absolute; inset: 0; display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 0 12px; align-content: center; padding: 0 12px; border: 0.5px solid var(--ink-4); }
 .fallback .y { font-size: var(--s-meta); line-height: var(--l-body); color: var(--ink-3); }
 .fallback .ft { color: var(--ink-3); }
