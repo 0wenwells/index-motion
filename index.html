@@ -105,11 +105,8 @@ svg { display: block; width: 100%; height: auto; }
 .work:hover p, .work:hover .m, .work.sel p, .work.sel .m { color: var(--ink); }   /* hover lifts the whole entry to white */
 .work .y { font-size: var(--s-meta); line-height: var(--l-title); font-variant-numeric: tabular-nums; color: var(--ink-2); }   /* sits on the title's line */
 .work .t { font-size: var(--s-title); line-height: var(--l-title); }
-.work .m { font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
+.work .m { margin-top: 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }   /* half-unit between title and maker */
 .work p { margin: 6px 0 0; color: var(--ink-2); }
-.work .links { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; font-size: var(--s-meta); line-height: var(--l-meta); }
-.work .links a, .info .go { color: var(--ink-2); text-decoration: none; }
-.work .links a:hover, .info .go:hover { color: var(--ink); }
 /* Image view */
 .work.img { display: block; padding: 6px var(--indent); }
 .work.img:focus-visible { outline: none; }
@@ -123,7 +120,6 @@ svg { display: block; width: 100%; height: auto; }
 .info .y { grid-row: 1; font-size: var(--s-meta); line-height: var(--l-title); color: var(--ink-2); }
 .info .t { grid-row: 1; }
 .info p { margin: 6px 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.info .go { margin-top: 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }
 .work.img:hover .info, .work.img:focus-within .info, .work.img:focus-visible .info, .work.img.sel .info { opacity: 1; }
 .work.img:focus-visible .thumb { outline: 1px solid var(--ink); outline-offset: 2px; }
 @media (hover: none) { .info { opacity: 1; background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.9)); align-content: end; } .info p { display: none; } }
@@ -425,17 +421,10 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     box.addEventListener("click", function (e) { e.stopPropagation(); });
     return box;
   }
-  // "Watch": plays in place when the link is a video we can embed, otherwise opens the link
-  function watchLink(w, src, cls) {
-    var a = document.createElement("a"); if (cls) a.className = cls;
-    a.target = "_blank"; a.rel = "noopener";
-    a.href = w.url || "https://www.youtube.com/results?search_query=" + encodeURIComponent(w.title.replace(/\s*\(titles\)\s*/i, " titles ").trim() + " " + w.maker);
-    a.textContent = src ? "Watch" : (w.url ? "Open link ↗" : "Find on YouTube ↗");
-    a.addEventListener("click", function (e) {
-      e.stopPropagation();
-      if (src && !(e.metaKey || e.ctrlKey || e.shiftKey)) { e.preventDefault(); play(w.id); }   // modifier-click still opens the video's own page
-    });
-    return a;
+  // Clicking an entry plays it in place; a link that can't be embedded opens in a new tab
+  function open(w, src) {
+    if (src) { play(w.id); return; }
+    if (w.url) window.open(w.url, "_blank", "noopener");
   }
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") stop(); });
   document.addEventListener("click", function (e) {
@@ -511,9 +500,13 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
         if (w.maker) body.appendChild(h("div", "m", w.maker));
         if (w.note) body.appendChild(h("p", null, w.note));
         if (state.playing === w.id) body.appendChild(player(w, src));
-        else { var links = h("div", "links"); links.appendChild(watchLink(w, src)); body.appendChild(links); }
         li.appendChild(body);
-        li.addEventListener("click", function () { if (src && state.playing !== w.id) play(w.id); });
+        if (state.playing !== w.id) {
+          li.tabIndex = 0; li.setAttribute("role", "button");
+          li.setAttribute("aria-label", "Play " + w.title + (w.maker ? ", " + w.maker : ""));
+          li.addEventListener("click", function () { open(w, src); });
+          li.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target === li) { e.preventDefault(); open(w, src); } });
+        }
         ol.appendChild(li);
       });
       col.appendChild(ol); row.appendChild(col);
@@ -547,12 +540,10 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
     var t = h("div", "t" + (src ? " playable" : ""), w.title); info.appendChild(t);
     if (w.maker) info.appendChild(h("div", "m", w.maker));
     if (w.note) info.appendChild(h("p", null, w.note));
-    info.appendChild(watchLink(w, src, "go"));
     fig.appendChild(info);
     li.appendChild(fig);
-    var open = function () { if (src) play(w.id); };
-    li.addEventListener("click", open);
-    li.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target === li) { e.preventDefault(); open(); } });
+    li.addEventListener("click", function () { open(w, src); });
+    li.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target === li) { e.preventDefault(); open(w, src); } });
     return li;
   }
 
