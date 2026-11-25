@@ -138,6 +138,9 @@ svg { display: block; width: 100%; height: auto; }
 .info .t { grid-row: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .info p { display: none; }   /* the note shows under the player once it opens */
 .work.img:hover .info, .work.img:focus-within .info, .work.img:focus-visible .info, .work.img.sel .info { opacity: 1; }
+.work.img.bare .info { display: none; }   /* List view: the band holds year and title only; hover lifts them to white */
+.work.img.bare:hover .fallback .y, .work.img.bare:hover .fallback .ft,
+.work.img.bare:focus-visible .fallback .y, .work.img.bare:focus-visible .fallback .ft { color: var(--ink); }
 .work.img:focus-visible .thumb { outline: 0.5px solid var(--ink-3); outline-offset: 3px; }
 @media (hover: none) { .info { opacity: 1; background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.9)); align-content: end; } .info p { display: none; } }
 @media (prefers-reduced-motion: reduce) { .info { transition: none; } }
@@ -586,7 +589,9 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       if (!d.list.length) { col.appendChild(h("p", "none", anyFilter() && d.all.length ? "Nothing matching" : "Nothing recorded")); row.appendChild(col); return; }
       var ol = h("ol", "works");
       d.list.forEach(function (w) {
-        if (state.view === "images") { ol.appendChild(imageTile(w)); return; }
+        // List and Images share one tile: the same band, with or without its still,
+        // so switching view changes what fills the band, not the layout
+        ol.appendChild(imageTile(w, state.view === "images")); return;
         var li = h("li", "work" + (state.sel === w.id ? " sel" : "") + (state.playing === w.id ? " playing" : "")); li.id = "w-" + w.id;
         li.appendChild(h("span", "y", String(w.year)));
         var body = h("div"); body.style.minWidth = "0";
@@ -612,7 +617,7 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
   }
 
   // Image view: one still per work; details appear on hover or keyboard focus
-  function imageTile(w) {
+  function imageTile(w, withStill) {
     var src0 = embedUrl(w.url);
     if (state.playing === w.id && src0) {
       var pli = h("li", "work img playing"); pli.id = "w-" + w.id;
@@ -621,9 +626,9 @@ var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS49s7kef_5-QOW
       pli.appendChild(cap);
       return pli;
     }
-    var li = h("li", "work img" + (state.sel === w.id ? " sel" : "")); li.id = "w-" + w.id; li.tabIndex = 0;
+    var li = h("li", "work img" + (withStill ? "" : " bare") + (state.sel === w.id ? " sel" : "")); li.id = "w-" + w.id; li.tabIndex = 0;
     li.setAttribute("aria-label", w.year + ", " + w.title + (w.maker ? ", " + w.maker : ""));
-    var fig = h("div", "thumb"), src = embedUrl(w.url), still = thumbUrl(w);
+    var fig = h("div", "thumb"), src = embedUrl(w.url), still = withStill ? thumbUrl(w) : null;
     var fall = h("div", "fallback"); fall.appendChild(h("span", "y", String(w.year))); fall.appendChild(h("span", "ft", w.title));
     fig.appendChild(fall);
     if (still) {
