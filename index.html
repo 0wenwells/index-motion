@@ -50,7 +50,8 @@ body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(
 }
 a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
-:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
+:focus-visible { outline: 0.5px solid var(--ink-3); outline-offset: 3px; }   /* keyboard focus: a fine grey line, not a white box */
+.strip:focus-visible { outline: none; }   /* the timeline itself takes focus only for arrow-key scrolling; framing the whole page is too much */
 
 /* Top: one line — name, subtitle, then the menus pushed to the right. No outlines. */
 .mast { display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: baseline; }
@@ -114,7 +115,9 @@ svg { display: block; width: 100%; height: auto; }
 .works { list-style: none; margin: 0; padding: 6px 0 0; }
 .work { padding: 12px var(--indent); cursor: pointer; display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 0 12px; }
 .work:last-child { padding-bottom: 0; }
-.work:hover p, .work:hover .m, .work.sel p, .work.sel .m { color: var(--ink); }   /* hover lifts the whole entry to white */
+.work:hover p, .work:hover .m, .work.sel p, .work.sel .m,
+.work:focus-visible p, .work:focus-visible .m { color: var(--ink); }   /* hover or keyboard focus lifts the whole entry to white */
+.work:not(.img):focus-visible { outline: none; }
 .work .y { font-size: var(--s-meta); line-height: var(--l-title); font-variant-numeric: tabular-nums; color: var(--ink-2); }   /* sits on the title's line */
 .work .t { font-size: var(--s-title); line-height: var(--l-title); }
 .work .m { margin-top: 6px; font-size: var(--s-meta); line-height: var(--l-meta); color: var(--ink-2); }   /* half-unit between title and maker */
@@ -133,7 +136,7 @@ svg { display: block; width: 100%; height: auto; }
 .info .t { grid-row: 1; }
 .info p { margin: 6px 0 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .work.img:hover .info, .work.img:focus-within .info, .work.img:focus-visible .info, .work.img.sel .info { opacity: 1; }
-.work.img:focus-visible .thumb { outline: 1px solid var(--ink); outline-offset: 2px; }
+.work.img:focus-visible .thumb { outline: 0.5px solid var(--ink-3); outline-offset: 3px; }
 @media (hover: none) { .info { opacity: 1; background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.9)); align-content: end; } .info p { display: none; } }
 @media (prefers-reduced-motion: reduce) { .info { transition: none; } }
 
